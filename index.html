@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#1B3D5C">
+<title>WORKSANTÉ App</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--navy:#1B3D5C;--navy2:#0F2740;--green:#2D7A5F;--green2:#3A9470;--warm:#F5F0E8;--text:#1C2B3A;--mid:#6B7D8E;--light:#EEF2F7;--white:#FFFFFF;--cream:#FDFAF5}
+html,body{height:100%;width:100%;font-family:'DM Sans',sans-serif;background:var(--light);color:var(--text);overflow:hidden;user-select:none}
+#app{display:flex;flex-direction:column;height:100vh;max-width:430px;margin:0 auto;background:var(--cream);position:relative;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,0.15)}
+.screen{display:none;flex-direction:column;flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;-webkit-overflow-scrolling:touch}
+.screen.active{display:flex}
+.topbar{background:var(--navy);padding:48px 20px 20px;flex-shrink:0}
+.topbar-row{display:flex;align-items:center;justify-content:space-between}
+.topbar-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:white;display:flex;align-items:center;gap:8px}
+.logo-mark{width:32px;height:32px;background:var(--green2);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.topbar-greeting{font-size:13px;color:rgba(255,255,255,0.6);margin-top:4px}
+.topbar-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none}
+.bottom-nav{position:absolute;bottom:0;left:0;right:0;background:white;border-top:1px solid #E8EDF2;display:flex;padding:8px 0 20px;z-index:100;box-shadow:0 -4px 20px rgba(27,61,92,0.08)}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;padding:6px 0}
+.nav-icon-wrap{width:28px;height:28px;display:flex;align-items:center;justify-content:center}
+.nav-label{font-size:10px;font-weight:500;color:var(--mid)}
+.nav-item.active .nav-label{color:var(--navy);font-weight:700}
+.nav-item.active .nav-icon-wrap svg{stroke:var(--navy)}
+.nav-item .nav-icon-wrap svg{stroke:var(--mid);transition:stroke .2s}
+.progress-card{background:linear-gradient(135deg,var(--green),var(--green2));border-radius:20px;padding:20px;margin:-12px 16px 16px;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(45,122,95,0.3)}
+.progress-card::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,0.08);border-radius:50%}
+.progress-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.progress-title{font-family:'Playfair Display',serif;font-size:20px;color:white;font-weight:700;margin-bottom:14px}
+.progress-bar-bg{background:rgba(255,255,255,0.25);border-radius:10px;height:8px;margin-bottom:8px}
+.progress-bar-fill{background:white;border-radius:10px;height:8px;width:0%;transition:width 1.2s ease}
+.progress-pct{font-size:13px;color:rgba(255,255,255,0.85)}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 16px 14px}
+.quick-btn{background:white;border-radius:16px;padding:16px 14px;display:flex;flex-direction:column;gap:10px;cursor:pointer;border:none;text-align:left;box-shadow:0 2px 12px rgba(27,61,92,0.07);transition:transform .15s}
+.quick-btn:active{transform:scale(0.97)}
+.quick-btn-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center}
+.qi-green{background:#D5F5E3}.qi-blue{background:#D6EAF8}.qi-orange{background:#FDEBD0}.qi-purple{background:#F5EEF8}
+.quick-btn-label{font-size:14px;font-weight:600;color:var(--navy);line-height:1.2}
+.quick-btn-sub{font-size:11px;color:var(--mid);margin-top:-4px}
+.daily-tip{background:var(--warm);border-radius:16px;padding:16px;margin:0 16px 14px;display:flex;gap:14px;align-items:flex-start}
+.tip-icon-wrap{width:40px;height:40px;border-radius:11px;background:rgba(45,122,95,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tip-label{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.tip-text{font-size:14px;color:var(--text);line-height:1.5}
+.stats-row{display:flex;gap:10px;margin:0 16px 14px}
+.stat-card{flex:1;background:white;border-radius:14px;padding:14px 10px;text-align:center;box-shadow:0 2px 12px rgba(27,61,92,0.07)}
+.stat-card-num{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy)}
+.stat-card-label{font-size:11px;color:var(--mid);margin-top:2px;line-height:1.3}
+.cat-scroll{display:flex;gap:8px;padding:14px 16px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+.cat-scroll::-webkit-scrollbar{display:none}
+.cat-pill{padding:7px 16px;border-radius:100px;white-space:nowrap;font-size:13px;font-weight:500;cursor:pointer;border:none;background:white;color:var(--mid);box-shadow:0 2px 8px rgba(27,61,92,0.08);transition:all .2s;flex-shrink:0}
+.cat-pill.active{background:var(--navy);color:white}
+.exo-grid{padding:0 16px;display:flex;flex-direction:column;gap:12px}
+.exo-card{background:white;border-radius:16px;padding:16px;display:flex;gap:14px;align-items:center;box-shadow:0 2px 12px rgba(27,61,92,0.07);cursor:pointer;transition:transform .15s}
+.exo-card:active{transform:scale(0.98)}
+.exo-icon-wrap{width:52px;height:52px;border-radius:14px;background:var(--light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.exo-info{flex:1}
+.exo-name{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:3px}
+.exo-meta{font-size:12px;color:var(--mid)}
+.exo-tags{display:flex;gap:5px;margin-top:6px}
+.exo-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px}
+.tag-easy{background:#D5F5E3;color:var(--green)}.tag-medium{background:#FEF5D0;color:#B7950B}.tag-cat{background:var(--light);color:var(--navy)}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:white;border-radius:24px 24px 0 0;width:100%;max-width:430px;padding:24px 24px 40px;max-height:80vh;overflow-y:auto;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:40px;height:4px;background:#E0E0E0;border-radius:2px;margin:0 auto 20px}
+.modal-icon-wrap{width:72px;height:72px;border-radius:20px;background:var(--light);margin:0 auto 14px;display:flex;align-items:center;justify-content:center}
+.modal-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);text-align:center;margin-bottom:6px}
+.modal-meta{text-align:center;font-size:13px;color:var(--mid);margin-bottom:20px}
+.modal-steps{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--navy);color:white;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-text{font-size:14px;line-height:1.6;color:var(--text);padding-top:3px}
+.timer-btn{width:100%;background:var(--green);color:white;border:none;border-radius:14px;padding:16px;font-size:16px;font-weight:600;cursor:pointer;margin-bottom:10px}
+.close-modal-btn{width:100%;background:var(--warm);color:var(--navy);border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:500;cursor:pointer}
+#ai-screen{background:var(--cream)}
+.chat-area{flex:1;padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto}
+.msg{display:flex;gap:8px;align-items:flex-end;max-width:85%;animation:msgIn .2s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.msg-avatar{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.msg.bot .msg-avatar{background:var(--navy)}.msg.user .msg-avatar{background:var(--green)}
+.msg-bubble{padding:12px 14px;border-radius:18px;font-size:14px;line-height:1.55}
+.msg.bot .msg-bubble{background:white;color:var(--text);border-radius:4px 18px 18px 18px;box-shadow:0 2px 8px rgba(27,61,92,0.08)}
+.msg.user .msg-bubble{background:var(--navy);color:white;border-radius:18px 4px 18px 18px}
+.suggestions{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 10px}
+.suggest-btn{background:white;color:var(--navy);border:1.5px solid #D0DBE8;border-radius:100px;padding:7px 14px;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s}
+.suggest-btn:active{background:var(--navy);color:white;border-color:var(--navy)}
+.rdv-card{background:linear-gradient(135deg,var(--navy),#2A5F8A);border-radius:14px;padding:14px 16px;margin:0 16px 10px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:opacity .2s}
+.rdv-card:active{opacity:.85}
+.rdv-icon-wrap{width:40px;height:40px;border-radius:11px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rdv-text-label{font-size:11px;color:rgba(255,255,255,0.65);font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.rdv-text-title{font-size:15px;font-weight:600;color:white;margin-top:2px}
+.rdv-arrow{margin-left:auto}
+.chat-input-zone{padding:10px 16px 8px;background:white;border-top:1px solid #EEF2F7;flex-shrink:0}
+.chat-input-row{display:flex;gap:8px;align-items:center}
+.chat-input{flex:1;background:var(--light);border:none;border-radius:24px;padding:12px 16px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;resize:none;line-height:1.4;max-height:100px;overflow-y:auto}
+.chat-input::placeholder{color:var(--mid)}
+.send-btn{width:42px;height:42px;border-radius:50%;flex-shrink:0;background:var(--navy);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.send-btn:active{transform:scale(0.92)}
+.typing{display:flex;gap:4px;align-items:center;padding:12px 14px;background:white;border-radius:4px 18px 18px 18px;box-shadow:0 2px 8px rgba(27,61,92,0.08);width:fit-content}
+.typing-dot{width:7px;height:7px;background:var(--mid);border-radius:50%;animation:bounce .8s infinite}
+.typing-dot:nth-child(2){animation-delay:.15s}.typing-dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.profile-header{background:linear-gradient(135deg,var(--navy),#2A5F8A);padding:48px 20px 32px;text-align:center}
+.profile-avatar{width:72px;height:72px;border-radius:50%;background:white;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:var(--navy);font-family:'Playfair Display',serif;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
+.profile-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:white;margin-bottom:4px}
+.profile-company{font-size:13px;color:rgba(255,255,255,0.65)}
+.profile-stats{display:flex;background:white;margin:0 16px;border-radius:16px;margin-top:-20px;box-shadow:0 4px 20px rgba(27,61,92,0.12);overflow:hidden}
+.profile-stat{flex:1;padding:16px 8px;text-align:center}
+.profile-stat+.profile-stat{border-left:1px solid var(--light)}
+.profile-stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy)}
+.profile-stat-label{font-size:11px;color:var(--mid);margin-top:2px}
+.menu-section{margin:16px}
+.menu-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--mid);margin-bottom:8px;padding-left:4px}
+.menu-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(27,61,92,0.07)}
+.menu-item{display:flex;align-items:center;gap:14px;padding:16px;border-bottom:1px solid var(--light);cursor:pointer;transition:background .15s}
+.menu-item:last-child{border-bottom:none}
+.menu-item:active{background:var(--light)}
+.menu-item-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mi-green{background:#D5F5E3}.mi-blue{background:#D6EAF8}.mi-orange{background:#FDEBD0}.mi-red{background:#FADBD8}
+.menu-item-text{flex:1}
+.menu-item-label{font-size:15px;font-weight:500;color:var(--text)}
+.menu-item-sub{font-size:12px;color:var(--mid);margin-top:1px}
+.stress-overlay{display:none;position:fixed;inset:0;z-index:300;background:var(--navy);flex-direction:column;align-items:center;justify-content:center;padding:40px 32px}
+.stress-overlay.open{display:flex}
+.stress-close{position:absolute;top:52px;right:20px;cursor:pointer;background:rgba(255,255,255,0.1);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center}
+.stress-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:white;text-align:center;margin-bottom:10px}
+.stress-sub{font-size:15px;color:rgba(255,255,255,0.65);text-align:center;margin-bottom:48px;line-height:1.6}
+.breath-circle{width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 32px;transition:transform 4s ease}
+.breath-inner{width:120px;height:120px;border-radius:50%;background:rgba(45,122,95,0.5);display:flex;align-items:center;justify-content:center}
+.breath-label{font-size:20px;font-weight:600;color:white;text-align:center;margin-bottom:8px}
+.breath-count{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;color:white;text-align:center;margin-bottom:40px}
+.stress-btn{background:var(--green2);color:white;border:none;border-radius:14px;padding:16px 48px;font-size:16px;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app">
+
+<div id="home-screen" class="screen active">
+  <div class="topbar" style="background:linear-gradient(135deg,var(--navy) 0%,#2A5F8A 100%)">
+    <div class="topbar-row">
+      <div>
+        <div class="topbar-logo">
+          <div class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 21.7C5.4 17 2 12.9 2 9a6 6 0 0 1 10-4.5A6 6 0 0 1 22 9c0 3.9-3.4 8-10 12.7z"/></svg></div>
+          WORKSANTÉ
+        </div>
+        <div class="topbar-greeting">Bonjour · Bienvenue</div>
+      </div>
+      <button class="topbar-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+    </div>
+  </div>
+  <div class="progress-card">
+    <div class="progress-label">Progression du jour</div>
+    <div class="progress-title">Programme en cours</div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-pct">1 exercice sur 3 complétés</div>
+  </div>
+  <div class="quick-actions">
+    <button class="quick-btn" onclick="goTo('exercises-screen')">
+      <div class="quick-btn-icon qi-green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D7A5F" stroke-width="2"><path d="M18 3a3 3 0 0 0-3 3l-7 3.5a3 3 0 1 0 0 3L15 16a3 3 0 1 0 .89-1.36l-7-3.5A3 3 0 0 0 9 9.5L16 6a3 3 0 0 0 5-2.5A3 3 0 0 0 18 3z"/></svg></div>
+      <div class="quick-btn-label">Exercices</div><div class="quick-btn-sub">3 disponibles</div>
+    </button>
+    <button class="quick-btn" onclick="openStress()">
+      <div class="quick-btn-icon qi-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1B3D5C" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg></div>
+      <div class="quick-btn-label">Anti-stress</div><div class="quick-btn-sub">Cohérence cardiaque</div>
+    </button>
+    <button class="quick-btn" onclick="goTo('ai-screen')">
+      <div class="quick-btn-icon qi-purple"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7D3C98" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <div class="quick-btn-label">Assistant IA</div><div class="quick-btn-sub">Posez vos questions</div>
+    </button>
+    <button class="quick-btn" onclick="openRdv()">
+      <div class="quick-btn-icon qi-orange"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D35400" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div class="quick-btn-label">Réserver</div><div class="quick-btn-sub">Séance kiné prioritaire</div>
+    </button>
+  </div>
+  <div class="daily-tip">
+    <div class="tip-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D7A5F" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+    <div><div class="tip-label">Conseil du jour</div><div class="tip-text">Toutes les 45 minutes, levez-vous 2 minutes. Ce simple geste réduit les tensions lombaires de 30%.</div></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-card-num">12</div><div class="stat-card-label">Exercices<br>ce mois</div></div>
+    <div class="stat-card"><div class="stat-card-num">4</div><div class="stat-card-label">Jours<br>consécutifs</div></div>
+    <div class="stat-card"><div class="stat-card-num">85%</div><div class="stat-card-label">Score<br>bien-être</div></div>
+  </div>
+</div>
+
+<div id="exercises-screen" class="screen">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="topbar-logo"><div class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 21.7C5.4 17 2 12.9 2 9a6 6 0 0 1 10-4.5A6 6 0 0 1 22 9c0 3.9-3.4 8-10 12.7z"/></svg></div>Exercices</div>
+    </div>
+  </div>
+  <div class="cat-scroll">
+    <button class="cat-pill active" onclick="filterCat('all',this)">Tous</button>
+    <button class="cat-pill" onclick="filterCat('dos',this)">Dos & Lombaires</button>
+    <button class="cat-pill" onclick="filterCat('cou',this)">Cou & Épaules</button>
+    <button class="cat-pill" onclick="filterCat('stress',this)">Stress</button>
+    <button class="cat-pill" onclick="filterCat('mobilite',this)">Mobilité</button>
+  </div>
+  <div class="exo-grid" id="exoGrid"></div>
+</div>
+
+<div id="ai-screen" class="screen">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div>
+        <div class="topbar-logo"><div class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>Assistant santé</div>
+        <div class="topbar-greeting">Disponible 24h/24 · Propulsé par IA</div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-area" id="chatArea"></div>
+  <div class="suggestions" id="suggestions">
+    <button class="suggest-btn" onclick="sendSuggestion(this)">Mal au dos</button>
+    <button class="suggest-btn" onclick="sendSuggestion(this)">Je suis stressé</button>
+    <button class="suggest-btn" onclick="sendSuggestion(this)">Douleur épaule</button>
+    <button class="suggest-btn" onclick="sendSuggestion(this)">Mal dormi</button>
+    <button class="suggest-btn" onclick="sendSuggestion(this)">Exercice rapide</button>
+  </div>
+  <div class="rdv-card" onclick="openRdv()">
+    <div class="rdv-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+    <div><div class="rdv-text-label">Accès prioritaire</div><div class="rdv-text-title">Réserver une séance kiné</div></div>
+    <div class="rdv-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+  </div>
+  <div class="chat-input-zone">
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chatInput" placeholder="Posez votre question santé..." rows="1"
+        oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
+      <button class="send-btn" onclick="sendMsg()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2" fill="white"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<div id="profile-screen" class="screen">
+  <div class="profile-header">
+    <div class="profile-avatar">D</div>
+    <div class="profile-name">David</div>
+    <div class="profile-company">WORKSANTÉ · Salarié</div>
+  </div>
+  <div class="profile-stats">
+    <div class="profile-stat"><div class="profile-stat-num">12</div><div class="profile-stat-label">Exercices</div></div>
+    <div class="profile-stat"><div class="profile-stat-num">4</div><div class="profile-stat-label">Jours actifs</div></div>
+    <div class="profile-stat"><div class="profile-stat-num">3</div><div class="profile-stat-label">Séances kiné</div></div>
+  </div>
+  <div class="menu-section" style="margin-top:24px">
+    <div class="menu-title">Mon programme</div>
+    <div class="menu-card">
+      <div class="menu-item" onclick="goTo('exercises-screen')">
+        <div class="menu-item-icon mi-green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2D7A5F" stroke-width="2"><path d="M18 3a3 3 0 0 0-3 3l-7 3.5a3 3 0 1 0 0 3L15 16a3 3 0 1 0 .89-1.36l-7-3.5A3 3 0 0 0 9 9.5L16 6a3 3 0 0 0 5-2.5A3 3 0 0 0 18 3z"/></svg></div>
+        <div class="menu-item-text"><div class="menu-item-label">Mes exercices</div><div class="menu-item-sub">3 exercices recommandés</div></div>
+        <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7D8E" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+      <div class="menu-item" onclick="openRdv()">
+        <div class="menu-item-icon mi-blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B3D5C" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="menu-item-text"><div class="menu-item-label">Réserver une séance</div><div class="menu-item-sub">Accès prioritaire WORKSANTÉ</div></div>
+        <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7D8E" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+      <div class="menu-item" onclick="openStress()">
+        <div class="menu-item-icon mi-orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D35400" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg></div>
+        <div class="menu-item-text"><div class="menu-item-label">Gestion du stress</div><div class="menu-item-sub">Cohérence cardiaque guidée</div></div>
+        <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7D8E" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+    </div>
+  </div>
+  <div class="menu-section">
+    <div class="menu-title">Paramètres</div>
+    <div class="menu-card">
+      <div class="menu-item">
+        <div class="menu-item-icon mi-blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B3D5C" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <div class="menu-item-text"><div class="menu-item-label">Notifications</div><div class="menu-item-sub">Rappels quotidiens activés</div></div>
+        <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7D8E" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-icon mi-red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="menu-item-text"><div class="menu-item-label">Confidentialité</div><div class="menu-item-sub">Données anonymisées — RGPD</div></div>
+        <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7D8E" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <div class="nav-item active" onclick="goTo('home-screen')" id="nav-home">
+    <div class="nav-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+    <div class="nav-label">Accueil</div>
+  </div>
+  <div class="nav-item" onclick="goTo('exercises-screen')" id="nav-exercises">
+    <div class="nav-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 3a3 3 0 0 0-3 3l-7 3.5a3 3 0 1 0 0 3L15 16a3 3 0 1 0 .89-1.36l-7-3.5A3 3 0 0 0 9 9.5L16 6a3 3 0 0 0 5-2.5A3 3 0 0 0 18 3z"/></svg></div>
+    <div class="nav-label">Exercices</div>
+  </div>
+  <div class="nav-item" onclick="goTo('ai-screen')" id="nav-ai">
+    <div class="nav-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+    <div class="nav-label">Assistant</div>
+  </div>
+  <div class="nav-item" onclick="goTo('profile-screen')" id="nav-profile">
+    <div class="nav-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <div class="nav-label">Profil</div>
+  </div>
+</nav>
+</div>
+
+<div class="modal-overlay" id="exoModal" onclick="if(event.target===this)closeExo()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-icon-wrap" id="modalIcon"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-meta" id="modalMeta"></div>
+    <div class="modal-steps" id="modalSteps"></div>
+    <button class="timer-btn" id="timerBtn" onclick="startTimer()">Démarrer le timer</button>
+    <button class="close-modal-btn" onclick="closeExo()">Fermer</button>
+  </div>
+</div>
+
+<div class="stress-overlay" id="stressOverlay">
+  <button class="stress-close" onclick="closeStress()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <div class="stress-title">Cohérence cardiaque</div>
+  <div class="stress-sub">Régule ton système nerveux<br>en 5 minutes. Suis le rythme.</div>
+  <div class="breath-circle" id="breathCircle">
+    <div class="breath-inner"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M12 2a10 10 0 0 1 7.74 16.33M12 22a10 10 0 0 1-7.74-16.33"/><circle cx="12" cy="12" r="3"/></svg></div>
+  </div>
+  <div class="breath-label" id="breathLabel">Inspirez</div>
+  <div class="breath-count" id="breathCount">4</div>
+  <button class="stress-btn" id="stressStartBtn" onclick="toggleBreath()">Commencer</button>
+</div>
+
+<script>
+const EXO_ICONS={
+  dos:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B3D5C" stroke-width="1.8"><path d="M12 2a2 2 0 0 1 2 2v1a2 2 0 0 1-4 0V4a2 2 0 0 1 2-2z"/><path d="M12 7v10"/><path d="M9 10l3 3 3-3"/><path d="M7 17h10"/></svg>`,
+  cou:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B3D5C" stroke-width="1.8"><circle cx="12" cy="6" r="3"/><path d="M12 9v6"/><path d="M9 12h6"/><path d="M9 15l-2 5"/><path d="M15 15l2 5"/></svg>`,
+  stress:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B3D5C" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>`,
+  mobilite:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1B3D5C" stroke-width="1.8"><circle cx="12" cy="5" r="2"/><path d="M12 7v5l3 3"/><path d="M9 13l-3 4"/><path d="M15 13l3 4"/></svg>`
+};
+const exercises=[
+  {id:1,name:'Étirement lombaire',meta:'3 min · Dos & Lombaires',cat:'dos',level:'easy',catLabel:'Dos',steps:['Allongez-vous sur le dos, genoux fléchis.','Ramenez les deux genoux vers la poitrine.','Maintenez 30 secondes, respirez calmement.','Relâchez et répétez 3 fois.']},
+  {id:2,name:'Relâchement cervical',meta:'2 min · Cou',cat:'cou',level:'easy',catLabel:'Cou',steps:['Assis droit, épaules relâchées.','Inclinez doucement la tête vers l\'épaule droite.','Maintenez 20 secondes, sentez l\'étirement.','Recommencez de l\'autre côté.']},
+  {id:3,name:'Mobilité des épaules',meta:'4 min · Épaules',cat:'cou',level:'medium',catLabel:'Épaules',steps:['Debout ou assis, dos droit.','Tracez de grands cercles avec les épaules vers l\'arrière.','10 rotations vers l\'arrière, puis 10 vers l\'avant.','Terminez par un haussement d\'épaules maintenu 5 secondes.']},
+  {id:4,name:'Respiration abdominale',meta:'5 min · Stress',cat:'stress',level:'easy',catLabel:'Stress',steps:['Assis confortablement, une main sur le ventre.','Inspirez par le nez en gonflant le ventre (4 secondes).','Expirez lentement par la bouche (6 secondes).','Répétez 10 fois en vous concentrant sur votre respiration.']},
+  {id:5,name:'Activation posturale',meta:'5 min · Mobilité',cat:'mobilite',level:'medium',catLabel:'Mobilité',steps:['Debout, pieds écartés largeur d\'épaules.','Inclinez le buste vers l\'avant, mains aux genoux.','Redressez-vous en activant les muscles du dos.','Répétez 10 fois lentement.']},
+  {id:6,name:'Étirement ischio-jambiers',meta:'3 min · Dos',cat:'dos',level:'easy',catLabel:'Dos',steps:['Assis au bord de la chaise, une jambe tendue.','Gardez le dos droit et penchez légèrement le buste.','Sentez l\'étirement à l\'arrière de la cuisse.','Maintenez 30 secondes par jambe.']}
+];
+let timerInterval=null,timerSeconds=0,breathRunning=false,breathTimer=null,chatHistory=[];
+
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const map={'home-screen':'nav-home','exercises-screen':'nav-exercises','ai-screen':'nav-ai','profile-screen':'nav-profile'};
+  if(map[id])document.getElementById(map[id]).classList.add('active');
+  if(id==='ai-screen'&&document.getElementById('chatArea').children.length===0)initChat();
+}
+
+function renderExos(cat){
+  const grid=document.getElementById('exoGrid');
+  grid.innerHTML='';
+  exercises.filter(e=>cat==='all'||e.cat===cat).forEach(e=>{
+    grid.innerHTML+=`<div class="exo-card" onclick="openExo(${e.id})"><div class="exo-icon-wrap">${EXO_ICONS[e.cat]}</div><div class="exo-info"><div class="exo-name">${e.name}</div><div class="exo-meta">${e.meta}</div><div class="exo-tags"><span class="exo-tag ${e.level==='easy'?'tag-easy':'tag-medium'}">${e.level==='easy'?'Facile':'Modéré'}</span><span class="exo-tag tag-cat">${e.catLabel}</span></div></div><div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B7D8E" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div></div>`;
+  });
+}
+
+function filterCat(cat,btn){
+  document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  renderExos(cat);
+}
+
+function openExo(id){
+  const e=exercises.find(x=>x.id===id);
+  document.getElementById('modalIcon').innerHTML=`<div style="transform:scale(1.4)">${EXO_ICONS[e.cat]}</div>`;
+  document.getElementById('modalTitle').textContent=e.name;
+  document.getElementById('modalMeta').textContent=e.meta;
+  document.getElementById('modalSteps').innerHTML=e.steps.map((s,i)=>`<div class="step"><div class="step-num">${i+1}</div><div class="step-text">${s}</div></div>`).join('');
+  document.getElementById('timerBtn').textContent='Démarrer le timer';
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
+  document.getElementById('exoModal').classList.add('open');
+}
+
+function closeExo(){
+  document.getElementById('exoModal').classList.remove('open');
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
+}
+
+function startTimer(){
+  const btn=document.getElementById('timerBtn');
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;btn.textContent='Démarrer le timer';return;}
+  timerSeconds=0;
+  timerInterval=setInterval(()=>{
+    timerSeconds++;
+    const m=Math.floor(timerSeconds/60).toString().padStart(2,'0');
+    const s=(timerSeconds%60).toString().padStart(2,'0');
+    btn.textContent=`${m}:${s} · Arrêter`;
+    if(timerSeconds>=300){clearInterval(timerInterval);timerInterval=null;btn.textContent='Exercice terminé ✓';}
+  },1000);
+}
+
+function openStress(){document.getElementById('stressOverlay').classList.add('open');}
+function closeStress(){
+  document.getElementById('stressOverlay').classList.remove('open');
+  if(breathTimer){clearInterval(breathTimer);breathTimer=null;}
+  breathRunning=false;
+  document.getElementById('stressStartBtn').textContent='Commencer';
+  document.getElementById('breathLabel').textContent='Inspirez';
+  document.getElementById('breathCount').textContent='4';
+  document.getElementById('breathCircle').style.transform='';
+}
+
+function toggleBreath(){
+  if(breathRunning){clearInterval(breathTimer);breathTimer=null;breathRunning=false;document.getElementById('stressStartBtn').textContent='Reprendre';}
+  else{breathRunning=true;document.getElementById('stressStartBtn').textContent='Pause';runBreath();}
+}
+
+function runBreath(){
+  const phases=[{label:'Inspirez',count:4,scale:'scale(1.2)'},{label:'Retenez',count:4,scale:'scale(1.2)'},{label:'Expirez',count:6,scale:'scale(1)'},{label:'Pause',count:2,scale:'scale(1)'}];
+  let pi=0;let count=phases[0].count;
+  document.getElementById('breathLabel').textContent=phases[0].label;
+  document.getElementById('breathCount').textContent=count;
+  document.getElementById('breathCircle').style.transform=phases[0].scale;
+  breathTimer=setInterval(()=>{
+    if(!breathRunning)return;
+    count--;
+    document.getElementById('breathCount').textContent=count;
+    if(count<=0){pi=(pi+1)%phases.length;count=phases[pi].count;document.getElementById('breathLabel').textContent=phases[pi].label;document.getElementById('breathCircle').style.transform=phases[pi].scale;}
+  },1000);
+}
+
+function openRdv(){alert('Redirection vers la prise de rendez-vous prioritaire WORKSANTÉ.\n\n→ Lien Calendly à configurer.');}
+
+const SYSTEM=`Tu es l'assistant santé de WORKSANTÉ. Tu es kinésithérapeute diplômé. Tu aides les salariés avec des questions sur la posture, les TMS, le stress, le sommeil et la nutrition. Tu proposes des exercices simples. Tu es bienveillant et professionnel. Tes réponses sont courtes (3-4 phrases max). Pour toute douleur persistante, recommande de réserver une séance kiné WORKSANTÉ. Réponds toujours en français.`;
+
+function initChat(){addMsg('bot','Bonjour, je suis votre assistant santé WORKSANTÉ. Posez-moi vos questions sur la posture, le stress ou les douleurs.');}
+
+function addMsg(role,text){
+  const area=document.getElementById('chatArea');
+  const div=document.createElement('div');
+  div.className=`msg ${role}`;
+  const icon=role==='bot'?`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+  div.innerHTML=`<div class="msg-avatar">${icon}</div><div class="msg-bubble">${text}</div>`;
+  area.appendChild(div);
+  area.scrollTop=area.scrollHeight;
+}
+
+function addTyping(){
+  const area=document.getElementById('chatArea');
+  const div=document.createElement('div');
+  div.className='msg bot';div.id='typing-indicator';
+  div.innerHTML=`<div class="msg-avatar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  area.appendChild(div);area.scrollTop=area.scrollHeight;
+}
+
+function removeTyping(){const t=document.getElementById('typing-indicator');if(t)t.remove();}
+
+async function sendMsg(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';input.style.height='auto';
+  document.getElementById('suggestions').style.display='none';
+  addMsg('user',text);
+  chatHistory.push({role:'user',content:text});
+  addTyping();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM,messages:chatHistory})});
+    const data=await res.json();
+    removeTyping();
+    const reply=data.content?.[0]?.text||'Je n\'ai pas pu répondre, réessayez.';
+    chatHistory.push({role:'assistant',content:reply});
+    addMsg('bot',reply);
+  }catch(e){removeTyping();addMsg('bot','Une erreur est survenue. Vérifiez votre connexion.');}
+}
+
+function sendSuggestion(btn){document.getElementById('chatInput').value=btn.textContent;sendMsg();}
+
+renderExos('all');
+setTimeout(()=>{document.getElementById('progressFill').style.width='35%';},400);
+</script>
+
+</body>
+</html>
