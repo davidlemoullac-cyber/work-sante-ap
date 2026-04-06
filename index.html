@@ -1,221 +1,268 @@
-<!DOCTYPE html><html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WORKSANTÉ — Prévention TMS & Performance Durable</title>
-
-<style>
-    /* ── CONFIGURATION DESIGN SYSTEM ── */
-    :root {
-        --bg-color: #000000;
-        --card-bg: #1d1d1f;
-        --text-main: #f5f5f7;
-        --text-secondary: #86868b;
-        --accent-green: #22C55E;
-        --accent-blue: #60A5FA;
-        --nav-bg: rgba(0, 0, 0, 0.8);
-        --ease-apple: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-    
-    html { scroll-behavior: smooth; }
-
-    body { 
-        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif; 
-        background: var(--bg-color); 
-        color: var(--text-main); 
-        line-height: 1.47059;
-        letter-spacing: -0.022em;
-        overflow-x: hidden;
-    }
-
-    /* ── NAVIGATION (EFFET VERRE) ── */
-    nav { 
-        position: fixed; top: 0; width: 100%; z-index: 1000; 
-        height: 48px; display: flex; align-items: center; 
-        background: var(--nav-bg); 
-        backdrop-filter: saturate(180%) blur(20px);
-        border-bottom: 0.5px solid rgba(255, 255, 255, 0.15); 
-    }
-
-    .nav-inner { 
-        width: 100%; max-width: 1000px; margin: 0 auto; 
-        display: flex; justify-content: space-between; padding: 0 22px; 
-    }
-
-    .logo { font-size: 17px; font-weight: 600; color: #fff; text-decoration: none; }
-    .logo span { color: var(--accent-green); }
-
-    .nav-ul { display: flex; align-items: center; gap: 30px; list-style: none; }
-    .nav-ul a { font-size: 12px; font-weight: 400; color: #f5f5f7; opacity: 0.8; text-decoration: none; transition: opacity .2s; }
-    .nav-ul a:hover { opacity: 1; }
-    .nav-cta { color: var(--accent-green) !important; font-weight: 600 !important; }
-
-    /* ── HERO SECTION ── */
-    #hero { 
-        min-height: 100vh; display: flex; align-items: center; justify-content: center; 
-        padding: 120px 22px; position: relative; text-align: center;
-    }
-
-    .hero-glow {
-        position: absolute; width: 60vw; height: 40vw;
-        background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
-        top: 20%; left: 50%; transform: translateX(-50%); pointer-events: none;
-    }
-
-    h1 { 
-        font-size: clamp(48px, 9vw, 96px); font-weight: 700; line-height: 1.02; 
-        letter-spacing: -0.04em; margin-bottom: 28px; 
-    }
-
-    h1 em { 
-        font-style: normal; 
-        background: linear-gradient(180deg, #4ade80 0%, #16a34a 100%);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-
-    .hero-hook { 
-        font-size: clamp(19px, 2.5vw, 26px); font-weight: 600; 
-        color: var(--text-secondary); max-width: 750px; margin: 0 auto 48px; 
-    }
-
-    .btn-main { 
-        display: inline-block; background: var(--accent-green); color: #000; 
-        padding: 18px 36px; border-radius: 980px; font-size: 17px; font-weight: 600; 
-        text-decoration: none; transition: transform 0.3s var(--ease-apple);
-    }
-    .btn-main:hover { transform: scale(1.04); }
-    .btn-main:active { transform: scale(0.96); }
-
-    /* ── SECTIONS & BENTO GRID ── */
-    .section { padding: 140px 6% 80px; max-width: 1200px; margin: 0 auto; }
-    
-    .s-tag { color: var(--accent-green); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; display: block; }
-    .s-h2 { font-size: clamp(32px, 5vw, 56px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 50px; }
-
-    .pb-grid { 
-        display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; 
-    }
-
-    .pb-card { 
-        background: var(--card-bg); border-radius: 28px; padding: 48px; 
-        transition: transform 0.6s var(--ease-apple); overflow: hidden;
-    }
-    .pb-card:hover { transform: translateY(-5px); }
-    .pb-card.full { grid-column: 1 / -1; background: #0d1a10; border: 1px solid rgba(34, 197, 94, 0.2); }
-
-    .pb-num { font-size: 64px; font-weight: 700; letter-spacing: -0.04em; display: block; margin-bottom: 8px; }
-    .pb-num.r { color: #f87171; }
-    .pb-text { color: var(--text-secondary); font-size: 18px; }
-
-    /* ── REVEAL ANIMATION ── */
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1.2s var(--ease-apple), transform 1.2s var(--ease-apple); }
-    .reveal.v { opacity: 1; transform: translateY(0); }
-
-    /* ── FORMULAIRE APPLE STYLE ── */
-    .ct-form { background: var(--card-bg); padding: 40px; border-radius: 30px; }
-    input, select, textarea {
-        width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px; padding: 16px; color: #fff; font-size: 16px; margin-bottom: 16px; outline: none;
-    }
-    input:focus { border-color: var(--accent-green); background: rgba(34, 197, 94, 0.05); }
-
-    @media (max-width: 734px) {
-        .pb-grid { grid-template-columns: 1fr; }
-        .section { padding: 80px 22px; }
-        h1 { font-size: 44px; }
-        .nav-ul { display: none; }
-    }
-</style>
-
-
-</head>
-<body><nav>
-    <div class="nav-inner">
-        <a href="#hero" class="logo">WORK<span>SANTÉ</span></a>
-        <ul class="nav-ul">
-            <li><a href="#solution">Approche</a></li>
-            <li><a href="#offre">Programmes</a></li>
-            <li><a href="#contact" class="nav-cta">Audit offert</a></li>
-        </ul>
-    </div>
-</nav><section id="hero">
-    <div class="hero-glow"></div>
-    <div class="hero-inner reveal">
-        <span class="s-tag" style="color: #fff; opacity: 0.6;">Kinésithérapeute D.E. · Entreprise</span>
-        <h1>La douleur n'est pas un problème physique. <br><em>C'est un signal.</em></h1>
-        <p class="hero-hook">Stress, charge mentale, postures — votre système nerveux réagit. Nous intervenons à la source.</p>
-        <div class="hero-btns">
-            <a href="#contact" class="btn-main">Réserver mon audit offert</a>
-        </div>
-    </div>
-</section><section id="probleme" class="section">
-    <div class="reveal">
-        <span class="s-tag">Le problème</span>
-        <h2 class="s-h2">L'absentéisme n'est pas<br>une fatalité.</h2>
-    </div>
-
-<div class="pb-grid">
-    <div class="pb-card reveal">
-        <span class="pb-num r">117 Md€</span>
-        <p class="pb-text">Coût annuel de l'absentéisme en France. Agir tôt coûte 5x moins cher que traiter.</p>
-    </div>
-    <div class="pb-card reveal">
-        <span class="pb-num">87%</span>
-        <p class="pb-text">Des maladies professionnelles sont des TMS. Un chiffre en constante hausse.</p>
-    </div>
-    <div class="pb-card full reveal">
-        <h3 style="font-size: 24px; margin-bottom: 16px;">Notre Vision</h3>
-        <p class="pb-text" style="color: #fff; opacity: 0.9;">On ne progresse pas en évitant l'inconfort. Nous utilisons les neurosciences pour apprendre à vos équipes à réguler leur système nerveux et optimiser leur performance durablement.</p>
-    </div>
-</div>
-
-
-</section><section id="contact" class="section">
-    <div class="reveal">
-        <span class="s-tag">Contact</span>
-        <h2 class="s-h2">Parlons de vos enjeux.</h2>
-        <div class="ct-form">
-            <div id="formContent">
-                <input type="text" placeholder="Prénom et Nom" id="name">
-                <input type="email" placeholder="Email professionnel" id="email">
-                <select>
-                    <option>Effectif de l'entreprise</option>
-                    <option>1-20</option>
-                    <option>20-100</option>
-                    <option>100+</option>
-                </select>
-                <textarea placeholder="Comment pouvons-nous vous aider ?"></textarea>
-                <button class="btn-main" style="width: 100%; border: none; cursor: pointer;" onclick="submitForm()">Envoyer la demande</button>
-            </div>
-            <div id="formOk" style="display:none; text-align:center; padding: 40px;">
-                <h3 style="color: var(--accent-green);">Message envoyé.</h3>
-                <p>Nous vous recontactons sous 24h.</p>
-            </div>
-        </div>
-    </div>
-</section><script>
-    // Animation au défilement (Intersection Observer)
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('v');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Simulation d'envoi
-    function submitForm() {
-        const name = document.getElementById('name').value;
-        if(name) {
-            document.getElementById('formContent').style.display = 'none';
-            document.getElementById('formOk').style.display = 'block';
-        } else {
-            alert("Merci de remplir le formulaire.");
+    <style>
+        :root {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --accent: #22C55E;
+            --accent-soft: rgba(34, 197, 94, 0.1);
+            --text: #f5f5f7;
+            --text-dim: #86868b;
+            --border: rgba(255, 255, 255, 0.1);
+            --nav-height: 48px;
         }
-    }
-</script></body>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif; 
+            background: var(--bg); color: var(--text); line-height: 1.5; overflow-x: hidden;
+        }
+
+        /* ── NAVIGATION ── */
+        nav { 
+            position: fixed; top: 0; width: 100%; z-index: 1000; height: var(--nav-height); 
+            background: rgba(0,0,0,0.8); backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid var(--border); display: flex; align-items: center;
+        }
+        .nav-inner { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 22px; }
+        .logo { font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
+        .logo span { color: var(--accent); }
+        .nav-ul { display: flex; gap: 24px; list-style: none; align-items: center; }
+        .nav-ul a { font-size: 12px; color: var(--text); opacity: 0.7; text-decoration: none; transition: 0.2s; font-weight: 400; }
+        .nav-ul a:hover { opacity: 1; }
+        .btn-nav { background: var(--accent); color: #000 !important; padding: 5px 12px; border-radius: 980px; font-weight: 600 !important; opacity: 1 !important; }
+
+        /* ── HERO ── */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 22px; position: relative; }
+        .hero-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%); top: 15%; z-index: -1; }
+        .badge { background: var(--accent-soft); color: var(--accent); padding: 6px 16px; border-radius: 980px; font-size: 11px; font-weight: 700; margin-bottom: 30px; border: 0.5px solid rgba(34,197,94,0.3); text-transform: uppercase; letter-spacing: 1px; }
+        h1 { font-size: clamp(44px, 8vw, 88px); font-weight: 700; letter-spacing: -0.04em; line-height: 1.02; margin-bottom: 24px; }
+        h1 em { font-style: normal; background: linear-gradient(180deg, #4ade80, #16a34a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-sub { font-size: clamp(19px, 2.5vw, 24px); color: var(--text-dim); max-width: 800px; margin: 0 auto 40px; font-weight: 500; }
+        .hero-proof { font-size: 17px; color: var(--text-dim); font-style: italic; margin-bottom: 48px; opacity: 0.8; }
+
+        /* ── SECTIONS ── */
+        section { padding: 140px 22px; max-width: 1100px; margin: 0 auto; }
+        .tag { color: var(--accent); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 16px; }
+        h2 { font-size: clamp(34px, 5vw, 56px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 20px; }
+        .s-intro { font-size: 20px; color: var(--text-dim); max-width: 600px; margin-bottom: 60px; }
+
+        /* ── BENTO & CARDS ── */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .card { background: var(--card-bg); border-radius: 28px; padding: 48px; border: 0.5px solid var(--border); transition: 0.4s var(--ease-apple); }
+        .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+        .card.full { grid-column: 1 / -1; }
+        .card h3 { font-size: 24px; margin-bottom: 16px; letter-spacing: -0.5px; }
+        .num { font-size: 64px; font-weight: 700; letter-spacing: -0.05em; display: block; margin-bottom: 8px; }
+        .r { color: #f87171; }
+
+        /* ── SNA BLOCK (NEUROSCIENCES) ── */
+        .sna-container { background: var(--card-bg); border-radius: 32px; padding: 60px; border: 0.5px solid var(--border); position: relative; overflow: hidden; }
+        .sna-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #60A5FA, #F59E0B); }
+        .sna-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 30px 0; }
+        .pill { background: rgba(255,255,255,0.05); padding: 8px 18px; border-radius: 980px; font-size: 13px; color: var(--text-dim); border: 0.5px solid var(--border); }
+        .pill.active { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+        /* ── OFFRES ── */
+        .offers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+        .offer-card { background: var(--card-bg); border-radius: 28px; overflow: hidden; border: 0.5px solid var(--border); display: flex; flex-direction: column; }
+        .offer-head { padding: 40px; border-bottom: 0.5px solid var(--border); }
+        .offer-body { padding: 40px; flex-grow: 1; }
+        .feat-item { display: flex; gap: 12px; margin-bottom: 16px; font-size: 14px; color: var(--text-dim); }
+        .feat-item strong { color: #fff; }
+        .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+
+        /* ── ROI ── */
+        .roi-box { background: #000; border: 1px solid var(--accent); padding: 40px; border-radius: 24px; }
+        .roi-line { display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 0.5px solid var(--border); color: var(--text-dim); }
+        .roi-line.total { border: none; padding-top: 30px; font-size: 24px; color: #fff; }
+
+        /* ── FORM ── */
+        .form-container { background: var(--card-bg); padding: 60px; border-radius: 32px; border: 0.5px solid var(--border); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        input, select, textarea { 
+            width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
+            padding: 18px; border-radius: 14px; color: #fff; font-size: 16px; margin-bottom: 20px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent); background: rgba(34,197,94,0.03); }
+
+        /* ── UTILS ── */
+        .btn { display: inline-block; background: var(--accent); color: #000; padding: 20px 40px; border-radius: 980px; font-weight: 600; text-decoration: none; transition: 0.3s; font-size: 17px; border: none; cursor: pointer; }
+        .btn:hover { transform: scale(1.03); }
+        .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal.v { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 850px) {
+            .grid, .offers-grid, .form-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 48px; }
+            .nav-ul { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo">WORK<span>SANTÉ</span></a>
+            <ul class="nav-ul">
+                <li><a href="#probleme">Le Problème</a></li>
+                <li><a href="#approche">Approche</a></li>
+                <li><a href="#offres">Programmes</a></li>
+                <li><a href="#contact" class="btn-nav">Audit offert</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="reveal">
+            <span class="badge">Kinésithérapeute D.E. • Prévention TMS • Entreprise</span>
+            <h1>La douleur n'est pas <br>un problème physique. <br><em>C'est un signal.</em></h1>
+            <p class="hero-sub">Stress, charge mentale, postures prolongées — <strong>votre système nerveux réagit.</strong> Nous intervenons à la source, directement en entreprise.</p>
+            <p class="hero-proof">Une approche scientifique et terrain, centrée sur la douleur et la performance durable.</p>
+            <a href="#contact" class="btn">Réserver mon audit offert</a>
+        </div>
+    </section>
+
+    <section id="probleme">
+        <div class="reveal">
+            <span class="tag">Le Problème</span>
+            <h2>Ce que vivent vos équipes chaque jour.</h2>
+            <p class="s-intro">Les TMS et le stress chronique ne sont pas des fatalités. Ce sont des signaux évitables.</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <span class="num r">117 Md€</span>
+                    <h3>Coût de l'absentéisme</h3>
+                    <p style="color:var(--text-dim)">Coût annuel en France. Agir tôt coûte 5 fois moins cher que de traiter une pathologie installée.</p>
+                </div>
+                <div class="card">
+                    <span class="num">40%</span>
+                    <h3>Arrêts liés au stress</h3>
+                    <p style="color:var(--text-dim)">Des arrêts longs sont liés au stress chronique et au burn-out. Source : Agence Européenne 2025.</p>
+                </div>
+                <div class="card full" style="background: #0d1a10; border-color: rgba(34,197,94,0.2);">
+                    <h3>On ne progresse pas en évitant l'inconfort.</h3>
+                    <p>La plupart des entreprises attendent que la douleur devienne un arrêt de travail. Notre rôle est d'intervenir avant — sur les causes réelles : mauvaise compréhension du corps, gestion du stress insuffisante, postures non corrigées et fatigue ignorée.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="approche">
+        <div class="reveal">
+            <span class="tag">Comprendre</span>
+            <h2>La douleur n'est pas là où vous croyez.</h2>
+            <div class="sna-container">
+                <h3>Le système nerveux est au cœur de tout.</h3>
+                <p style="margin-top:20px; font-size: 18px;">La douleur est une réponse du système nerveux, pas uniquement un problème physique. Stress, fatigue et charge mentale activent les mêmes leviers neurologiques. Notre expertise repose sur les neurosciences pour agir là où les douleurs prennent racine.</p>
+                
+                <div class="sna-pills">
+                    <span class="pill active">Système nerveux autonome</span>
+                    <span class="pill active">Mécanismes de la douleur</span>
+                    <span class="pill">Cohérence cardiaque</span>
+                    <span class="pill">Adaptation & Récupération</span>
+                    <span class="pill">Performance durable</span>
+                </div>
+
+                <div style="border-left: 3px solid var(--accent); padding-left: 20px; font-style: italic; color: #fff;">
+                    "La douleur n'est pas un danger. C'est une information. Apprendre à la lire change tout."
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="offres">
+        <div class="reveal">
+            <span class="tag">Programmes</span>
+            <h2>Deux niveaux d'intervention.</h2>
+            <div class="offers-grid">
+                <div class="offer-card">
+                    <div class="offer-head" style="background: rgba(34, 197, 94, 0.05);">
+                        <span class="tag">Principal</span>
+                        <h3>Prévention & Performance</h3>
+                    </div>
+                    <div class="offer-body">
+                        <div class="feat-item"><div class="dot"></div><span><strong>Conférence collective</strong> — mécanismes de la douleur</span></div>
+                        <div class="feat-item"><div class="dot"></div><span><strong>Bilans posturaux individuels</strong> — évaluation clinique</span></div>
+                        <div class="feat-item"><div class="dot"></div><span><strong>Ateliers pratiques sur site</strong> — correction posturale</span></div>
+                        <div class="feat-item"><div class="dot"></div><span><strong>Rapport DRH trimestriel</strong> — suivi ROI mesurable</span></div>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <div class="offer-head" style="background: rgba(96, 165, 250, 0.05);">
+                        <span class="tag" style="color: #60A5FA;">Complémentaire</span>
+                        <h3>Bien-être & Récupération</h3>
+                    </div>
+                    <div class="offer-body">
+                        <div class="feat-item"><div class="dot" style="background:#60A5FA"></div><span><strong>Séances de mobilité</strong> — étirements actifs</span></div>
+                        <div class="feat-item"><div class="dot" style="background:#60A5FA"></div><span><strong>Respiration</strong> — gestion du stress immédiat</span></div>
+                        <div class="feat-item"><div class="dot" style="background:#60A5FA"></div><span><strong>Yoga adapté au travail</strong> — sans équipement</span></div>
+                        <div class="feat-item"><div class="dot" style="background:#60A5FA"></div><span><strong>Gestion de la fatigue</strong> — chronobiologie</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="roi">
+        <div class="reveal">
+            <span class="tag">Valeur Business</span>
+            <h2>Investir dans la performance.</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="roi-box">
+                        <div class="roi-line"><span>Absentéisme (100 sal.)</span><span class="r">-450 000€</span></div>
+                        <div class="roi-line"><span>Présentéisme</span><span class="r">-274 000€</span></div>
+                        <div class="roi-line total"><span>ROI Potentiel</span><span style="color:var(--accent)">x5</span></div>
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <p style="font-size: 18px; color: var(--text-dim);">Chaque euro investi dans un programme de prévention structuré génère jusqu'à 5 euros de bénéfices (Études INRS). Réduction des arrêts, productivité accrue et fidélisation des talents.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="reveal">
+            <div class="form-container">
+                <span class="tag">Audit Offert</span>
+                <h2 style="margin-bottom:40px">Passons à l'action.</h2>
+                <div class="form-grid">
+                    <input type="text" placeholder="Prénom">
+                    <input type="text" placeholder="Nom">
+                    <input type="email" placeholder="Email professionnel">
+                    <select>
+                        <option>Effectif de l'entreprise</option>
+                        <option>Moins de 20</option>
+                        <option>20 à 100</option>
+                        <option>Plus de 100</option>
+                    </select>
+                </div>
+                <textarea placeholder="Décrivez brièvement vos enjeux santé..."></textarea>
+                <button class="btn" style="width:100%">Envoyer ma demande →</button>
+                <p style="font-size:12px; color:var(--text-dim); margin-top:20px; text-align:center;">🔒 Données confidentielles • Réponse sous 24h</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 60px 22px; border-top: 0.5px solid var(--border); text-align: center; color: var(--text-dim); font-size: 12px;">
+        <p>© 2026 WORKSANTÉ • Marjorie LE MOULLAC • Kinésithérapeute D.E. • TVA non applicable</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('v');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
 </html>
