@@ -1,268 +1,266 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WORKSANTÉ — Prévention TMS & Performance Durable</title>
-    <style>
-        :root {
-            --bg: #000000;
-            --card-bg: #1c1c1e;
-            --accent: #22C55E;
-            --accent-soft: rgba(34, 197, 94, 0.1);
-            --text: #f5f5f7;
-            --text-dim: #86868b;
-            --border: rgba(255, 255, 255, 0.1);
-            --nav-height: 48px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WORKSANTE — Performance & Prévention</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --noir-apple: #000000;
+      --gris-fond: #161617;
+      --blanc-pur: #ffffff;
+      --or-editor: #d4a847;
+      --gris-texte: #86868b;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        html { scroll-behavior: smooth; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif; 
-            background: var(--bg); color: var(--text); line-height: 1.5; overflow-x: hidden;
-        }
+```
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* ── NAVIGATION ── */
-        nav { 
-            position: fixed; top: 0; width: 100%; z-index: 1000; height: var(--nav-height); 
-            background: rgba(0,0,0,0.8); backdrop-filter: saturate(180%) blur(20px);
-            border-bottom: 0.5px solid var(--border); display: flex; align-items: center;
-        }
-        .nav-inner { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 22px; }
-        .logo { font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
-        .logo span { color: var(--accent); }
-        .nav-ul { display: flex; gap: 24px; list-style: none; align-items: center; }
-        .nav-ul a { font-size: 12px; color: var(--text); opacity: 0.7; text-decoration: none; transition: 0.2s; font-weight: 400; }
-        .nav-ul a:hover { opacity: 1; }
-        .btn-nav { background: var(--accent); color: #000 !important; padding: 5px 12px; border-radius: 980px; font-weight: 600 !important; opacity: 1 !important; }
+body {
+  background: var(--noir-apple);
+  color: var(--blanc-pur);
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
 
-        /* ── HERO ── */
-        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 22px; position: relative; }
-        .hero-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%); top: 15%; z-index: -1; }
-        .badge { background: var(--accent-soft); color: var(--accent); padding: 6px 16px; border-radius: 980px; font-size: 11px; font-weight: 700; margin-bottom: 30px; border: 0.5px solid rgba(34,197,94,0.3); text-transform: uppercase; letter-spacing: 1px; }
-        h1 { font-size: clamp(44px, 8vw, 88px); font-weight: 700; letter-spacing: -0.04em; line-height: 1.02; margin-bottom: 24px; }
-        h1 em { font-style: normal; background: linear-gradient(180deg, #4ade80, #16a34a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-sub { font-size: clamp(19px, 2.5vw, 24px); color: var(--text-dim); max-width: 800px; margin: 0 auto 40px; font-weight: 500; }
-        .hero-proof { font-size: 17px; color: var(--text-dim); font-style: italic; margin-bottom: 48px; opacity: 0.8; }
+nav {
+  position: sticky;
+  top: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  padding: 20px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #222;
+}
 
-        /* ── SECTIONS ── */
-        section { padding: 140px 22px; max-width: 1100px; margin: 0 auto; }
-        .tag { color: var(--accent); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 16px; }
-        h2 { font-size: clamp(34px, 5vw, 56px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 20px; }
-        .s-intro { font-size: 20px; color: var(--text-dim); max-width: 600px; margin-bottom: 60px; }
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--or-editor);
+  text-decoration: none;
+  font-size: 1.2rem;
+}
 
-        /* ── BENTO & CARDS ── */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-        .card { background: var(--card-bg); border-radius: 28px; padding: 48px; border: 0.5px solid var(--border); transition: 0.4s var(--ease-apple); }
-        .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
-        .card.full { grid-column: 1 / -1; }
-        .card h3 { font-size: 24px; margin-bottom: 16px; letter-spacing: -0.5px; }
-        .num { font-size: 64px; font-weight: 700; letter-spacing: -0.05em; display: block; margin-bottom: 8px; }
-        .r { color: #f87171; }
+.nav-subtitle {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: var(--gris-texte);
+  text-transform: uppercase;
+}
 
-        /* ── SNA BLOCK (NEUROSCIENCES) ── */
-        .sna-container { background: var(--card-bg); border-radius: 32px; padding: 60px; border: 0.5px solid var(--border); position: relative; overflow: hidden; }
-        .sna-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #60A5FA, #F59E0B); }
-        .sna-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 30px 0; }
-        .pill { background: rgba(255,255,255,0.05); padding: 8px 18px; border-radius: 980px; font-size: 13px; color: var(--text-dim); border: 0.5px solid var(--border); }
-        .pill.active { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.hero {
+  text-align: center;
+  padding: 120px 5% 80px;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-        /* ── OFFRES ── */
-        .offers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
-        .offer-card { background: var(--card-bg); border-radius: 28px; overflow: hidden; border: 0.5px solid var(--border); display: flex; flex-direction: column; }
-        .offer-head { padding: 40px; border-bottom: 0.5px solid var(--border); }
-        .offer-body { padding: 40px; flex-grow: 1; }
-        .feat-item { display: flex; gap: 12px; margin-bottom: 16px; font-size: 14px; color: var(--text-dim); }
-        .feat-item strong { color: #fff; }
-        .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+.hero-eyebrow {
+  color: var(--or-editor);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 0.8rem;
+  margin-bottom: 25px;
+}
 
-        /* ── ROI ── */
-        .roi-box { background: #000; border: 1px solid var(--accent); padding: 40px; border-radius: 24px; }
-        .roi-line { display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 0.5px solid var(--border); color: var(--text-dim); }
-        .roi-line.total { border: none; padding-top: 30px; font-size: 24px; color: #fff; }
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  line-height: 1.1;
+  font-weight: 700;
+  text-transform: uppercase;
+  max-width: 1000px;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
 
-        /* ── FORM ── */
-        .form-container { background: var(--card-bg); padding: 60px; border-radius: 32px; border: 0.5px solid var(--border); }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        input, select, textarea { 
-            width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
-            padding: 18px; border-radius: 14px; color: #fff; font-size: 16px; margin-bottom: 20px; outline: none; transition: 0.3s;
-        }
-        input:focus { border-color: var(--accent); background: rgba(34,197,94,0.03); }
+.hero-description {
+  color: var(--gris-texte);
+  max-width: 650px;
+  font-size: 1.1rem;
+  font-weight: 300;
+}
 
-        /* ── UTILS ── */
-        .btn { display: inline-block; background: var(--accent); color: #000; padding: 20px 40px; border-radius: 980px; font-weight: 600; text-decoration: none; transition: 0.3s; font-size: 17px; border: none; cursor: pointer; }
-        .btn:hover { transform: scale(1.03); }
-        .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.4, 0, 0.2, 1); }
-        .reveal.v { opacity: 1; transform: translateY(0); }
+.newsletter-section {
+  padding: 40px 5%;
+  background: var(--noir-apple);
+}
 
-        @media (max-width: 850px) {
-            .grid, .offers-grid, .form-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 48px; }
-            .nav-ul { display: none; }
-        }
-    </style>
+.newsletter-box {
+  background: var(--gris-fond);
+  border-radius: 28px;
+  padding: 60px 40px;
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+  border: 1px solid #222;
+}
+
+.newsletter-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 35px;
+  flex-wrap: wrap;
+}
+
+input[type="email"] {
+  background: #2c2c2e;
+  border: 1px solid #3a3a3c;
+  padding: 18px 25px;
+  border-radius: 12px;
+  color: white;
+  min-width: 320px;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.btn-apple {
+  background: var(--blanc-pur);
+  color: black;
+  padding: 18px 40px;
+  border-radius: 980px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-apple:hover {
+  transform: scale(1.03);
+  background: #f5f5f7;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  background: #222;
+  gap: 1px;
+  margin-top: 80px;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+}
+
+.service-card {
+  background: var(--noir-apple);
+  padding: 80px 50px;
+  transition: background 0.4s;
+}
+
+.service-card:hover { background: #080808; }
+
+.service-num {
+  color: var(--or-editor);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  margin-bottom: 25px;
+  display: block;
+}
+
+.service-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.service-card p {
+  color: var(--gris-texte);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+footer {
+  padding: 100px 5% 60px;
+  text-align: center;
+  color: var(--gris-texte);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 2.8rem; }
+  input[type="email"] { min-width: 100%; }
+  .service-card { padding: 60px 30px; }
+}
+```
+
+  </style>
 </head>
 <body>
 
-    <nav>
-        <div class="nav-inner">
-            <a href="#" class="logo">WORK<span>SANTÉ</span></a>
-            <ul class="nav-ul">
-                <li><a href="#probleme">Le Problème</a></li>
-                <li><a href="#approche">Approche</a></li>
-                <li><a href="#offres">Programmes</a></li>
-                <li><a href="#contact" class="btn-nav">Audit offert</a></li>
-            </ul>
-        </div>
-    </nav>
+  <nav>
+    <a href="#" class="nav-logo">WORKSANTE</a>
+    <span class="nav-subtitle">Excellence & Prévention</span>
+  </nav>
 
-    <section class="hero">
-        <div class="hero-glow"></div>
-        <div class="reveal">
-            <span class="badge">Kinésithérapeute D.E. • Prévention TMS • Entreprise</span>
-            <h1>La douleur n'est pas <br>un problème physique. <br><em>C'est un signal.</em></h1>
-            <p class="hero-sub">Stress, charge mentale, postures prolongées — <strong>votre système nerveux réagit.</strong> Nous intervenons à la source, directement en entreprise.</p>
-            <p class="hero-proof">Une approche scientifique et terrain, centrée sur la douleur et la performance durable.</p>
-            <a href="#contact" class="btn">Réserver mon audit offert</a>
-        </div>
-    </section>
+  <section class="hero">
+    <p class="hero-eyebrow">Expertise Clinique</p>
+    <h1 class="hero-title">Le corps performant,<br>premier actif de l'entreprise.</h1>
+    <p class="hero-description">L'alliance de l'expertise clinique de pointe et de la stratégie de performance durable pour les décideurs.</p>
+  </section>
 
-    <section id="probleme">
-        <div class="reveal">
-            <span class="tag">Le Problème</span>
-            <h2>Ce que vivent vos équipes chaque jour.</h2>
-            <p class="s-intro">Les TMS et le stress chronique ne sont pas des fatalités. Ce sont des signaux évitables.</p>
-            
-            <div class="grid">
-                <div class="card">
-                    <span class="num r">117 Md€</span>
-                    <h3>Coût de l'absentéisme</h3>
-                    <p style="color:var(--text-dim)">Coût annuel en France. Agir tôt coûte 5 fois moins cher que de traiter une pathologie installée.</p>
-                </div>
-                <div class="card">
-                    <span class="num">40%</span>
-                    <h3>Arrêts liés au stress</h3>
-                    <p style="color:var(--text-dim)">Des arrêts longs sont liés au stress chronique et au burn-out. Source : Agence Européenne 2025.</p>
-                </div>
-                <div class="card full" style="background: #0d1a10; border-color: rgba(34,197,94,0.2);">
-                    <h3>On ne progresse pas en évitant l'inconfort.</h3>
-                    <p>La plupart des entreprises attendent que la douleur devienne un arrêt de travail. Notre rôle est d'intervenir avant — sur les causes réelles : mauvaise compréhension du corps, gestion du stress insuffisante, postures non corrigées et fatigue ignorée.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="newsletter-section">
+    <div class="newsletter-box">
+      <h2>La Lettre de la Performance</h2>
+      <p style="color: var(--gris-texte);">Analyses exclusives sur la santé des dirigeants et l'optimisation du capital humain.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="votre@email.com" required>
+        <button type="submit" class="btn-apple">S'abonner</button>
+      </form>
+    </div>
+  </section>
 
-    <section id="approche">
-        <div class="reveal">
-            <span class="tag">Comprendre</span>
-            <h2>La douleur n'est pas là où vous croyez.</h2>
-            <div class="sna-container">
-                <h3>Le système nerveux est au cœur de tout.</h3>
-                <p style="margin-top:20px; font-size: 18px;">La douleur est une réponse du système nerveux, pas uniquement un problème physique. Stress, fatigue et charge mentale activent les mêmes leviers neurologiques. Notre expertise repose sur les neurosciences pour agir là où les douleurs prennent racine.</p>
-                
-                <div class="sna-pills">
-                    <span class="pill active">Système nerveux autonome</span>
-                    <span class="pill active">Mécanismes de la douleur</span>
-                    <span class="pill">Cohérence cardiaque</span>
-                    <span class="pill">Adaptation & Récupération</span>
-                    <span class="pill">Performance durable</span>
-                </div>
+  <section class="services-grid">
+    <div class="service-card">
+      <span class="service-num">I.</span>
+      <h3>Kinésithérapie Premium</h3>
+      <p>Un suivi d'élite conçu pour les agendas complexes. Rééducation et optimisation fonctionnelle de haut niveau.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">II.</span>
+      <h3>Prévention Corporate</h3>
+      <p>Audit et mise en place de stratégies posturales pour réduire les TMS et booster l'efficacité au travail.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">III.</span>
+      <h3>Santé Mentale</h3>
+      <p>Développement de la résilience et gestion du stress physiologique en environnement de haute pression.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">IV.</span>
+      <h3>Coaching Dirigeant</h3>
+      <p>Préparation physique sur mesure et protocoles de récupération pour maintenir une énergie constante.</p>
+    </div>
+  </section>
 
-                <div style="border-left: 3px solid var(--accent); padding-left: 20px; font-style: italic; color: #fff;">
-                    "La douleur n'est pas un danger. C'est une information. Apprendre à la lire change tout."
-                </div>
-            </div>
-        </div>
-    </section>
+  <footer>
+    <p>WORKSANTE &copy; 2026 — PARIS</p>
+  </footer>
 
-    <section id="offres">
-        <div class="reveal">
-            <span class="tag">Programmes</span>
-            <h2>Deux niveaux d'intervention.</h2>
-            <div class="offers-grid">
-                <div class="offer-card">
-                    <div class="offer-head" style="background: rgba(34, 197, 94, 0.05);">
-                        <span class="tag">Principal</span>
-                        <h3>Prévention & Performance</h3>
-                    </div>
-                    <div class="offer-body">
-                        <div class="feat-item"><div class="dot"></div><span><strong>Conférence collective</strong> — mécanismes de la douleur</span></div>
-                        <div class="feat-item"><div class="dot"></div><span><strong>Bilans posturaux individuels</strong> — évaluation clinique</span></div>
-                        <div class="feat-item"><div class="dot"></div><span><strong>Ateliers pratiques sur site</strong> — correction posturale</span></div>
-                        <div class="feat-item"><div class="dot"></div><span><strong>Rapport DRH trimestriel</strong> — suivi ROI mesurable</span></div>
-                    </div>
-                </div>
-                <div class="offer-card">
-                    <div class="offer-head" style="background: rgba(96, 165, 250, 0.05);">
-                        <span class="tag" style="color: #60A5FA;">Complémentaire</span>
-                        <h3>Bien-être & Récupération</h3>
-                    </div>
-                    <div class="offer-body">
-                        <div class="feat-item"><div class="dot" style="background:#60A5FA"></div><span><strong>Séances de mobilité</strong> — étirements actifs</span></div>
-                        <div class="feat-item"><div class="dot" style="background:#60A5FA"></div><span><strong>Respiration</strong> — gestion du stress immédiat</span></div>
-                        <div class="feat-item"><div class="dot" style="background:#60A5FA"></div><span><strong>Yoga adapté au travail</strong> — sans équipement</span></div>
-                        <div class="feat-item"><div class="dot" style="background:#60A5FA"></div><span><strong>Gestion de la fatigue</strong> — chronobiologie</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="roi">
-        <div class="reveal">
-            <span class="tag">Valeur Business</span>
-            <h2>Investir dans la performance.</h2>
-            <div class="grid">
-                <div class="card">
-                    <div class="roi-box">
-                        <div class="roi-line"><span>Absentéisme (100 sal.)</span><span class="r">-450 000€</span></div>
-                        <div class="roi-line"><span>Présentéisme</span><span class="r">-274 000€</span></div>
-                        <div class="roi-line total"><span>ROI Potentiel</span><span style="color:var(--accent)">x5</span></div>
-                    </div>
-                </div>
-                <div style="display:flex; align-items:center;">
-                    <p style="font-size: 18px; color: var(--text-dim);">Chaque euro investi dans un programme de prévention structuré génère jusqu'à 5 euros de bénéfices (Études INRS). Réduction des arrêts, productivité accrue et fidélisation des talents.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="reveal">
-            <div class="form-container">
-                <span class="tag">Audit Offert</span>
-                <h2 style="margin-bottom:40px">Passons à l'action.</h2>
-                <div class="form-grid">
-                    <input type="text" placeholder="Prénom">
-                    <input type="text" placeholder="Nom">
-                    <input type="email" placeholder="Email professionnel">
-                    <select>
-                        <option>Effectif de l'entreprise</option>
-                        <option>Moins de 20</option>
-                        <option>20 à 100</option>
-                        <option>Plus de 100</option>
-                    </select>
-                </div>
-                <textarea placeholder="Décrivez brièvement vos enjeux santé..."></textarea>
-                <button class="btn" style="width:100%">Envoyer ma demande →</button>
-                <p style="font-size:12px; color:var(--text-dim); margin-top:20px; text-align:center;">🔒 Données confidentielles • Réponse sous 24h</p>
-            </div>
-        </div>
-    </section>
-
-    <footer style="padding: 60px 22px; border-top: 0.5px solid var(--border); text-align: center; color: var(--text-dim); font-size: 12px;">
-        <p>© 2026 WORKSANTÉ • Marjorie LE MOULLAC • Kinésithérapeute D.E. • TVA non applicable</p>
-    </footer>
-
-    <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('v');
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
 </body>
 </html>
