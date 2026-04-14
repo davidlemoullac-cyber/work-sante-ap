@@ -1,266 +1,321 @@
+```html
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WORKSANTE — Performance & Prévention</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --noir-apple: #000000;
-      --gris-fond: #161617;
+      --gris-fond: #0a0a0a;
       --blanc-pur: #ffffff;
       --or-editor: #d4a847;
-      --gris-texte: #86868b;
+      --gris-texte: #a1a1a6;
+      --border: #222;
     }
 
-```
-* { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    
+    body {
+      background: var(--noir-apple);
+      color: var(--blanc-pur);
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+    }
 
-body {
-  background: var(--noir-apple);
-  color: var(--blanc-pur);
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
+    /* BARRE DE NAVIGATION COMPACTE */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(15px);
+      z-index: 1000;
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
 
-nav {
-  position: sticky;
-  top: 0;
-  background: rgba(0,0,0,0.8);
-  backdrop-filter: blur(20px);
-  z-index: 1000;
-  padding: 20px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #222;
-}
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      color: var(--or-editor);
+      text-decoration: none;
+      font-size: 1rem;
+      letter-spacing: 2px;
+    }
 
-.nav-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--or-editor);
-  text-decoration: none;
-  font-size: 1.2rem;
-}
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
 
-.nav-subtitle {
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-  color: var(--gris-texte);
-  text-transform: uppercase;
-}
+    .nav-links a {
+      color: var(--gris-texte);
+      text-decoration: none;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.3s;
+    }
 
-.hero {
-  text-align: center;
-  padding: 120px 5% 80px;
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+    .nav-links a:hover { color: var(--blanc-pur); }
 
-.hero-eyebrow {
-  color: var(--or-editor);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  font-size: 0.8rem;
-  margin-bottom: 25px;
-}
+    /* SECTION HERO CONDENSÉE */
+    .hero {
+      text-align: center;
+      padding: 50px 5% 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.5rem, 7vw, 5.5rem);
-  line-height: 1.1;
-  font-weight: 700;
-  text-transform: uppercase;
-  max-width: 1000px;
-  margin-bottom: 40px;
-  letter-spacing: 1px;
-}
+    .hero-eyebrow {
+      color: var(--or-editor);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.6rem;
+      margin-bottom: 10px;
+    }
 
-.hero-description {
-  color: var(--gris-texte);
-  max-width: 650px;
-  font-size: 1.1rem;
-  font-weight: 300;
-}
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      line-height: 1.1;
+      font-weight: 700;
+      text-transform: uppercase;
+      max-width: 850px;
+      margin-bottom: 15px;
+    }
 
-.newsletter-section {
-  padding: 40px 5%;
-  background: var(--noir-apple);
-}
+    .hero-description {
+      color: var(--gris-texte);
+      max-width: 500px;
+      font-size: 0.85rem;
+      font-weight: 300;
+    }
 
-.newsletter-box {
-  background: var(--gris-fond);
-  border-radius: 28px;
-  padding: 60px 40px;
-  max-width: 850px;
-  margin: 0 auto;
-  text-align: center;
-  border: 1px solid #222;
-}
+    /* SECTION NEWSLETTER ET TITRES */
+    .content-section {
+      padding: 30px 5%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
 
-.newsletter-box h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.2rem;
-  margin-bottom: 15px;
-  font-weight: 600;
-}
+    .dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: start;
+    }
 
-.newsletter-form {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-top: 35px;
-  flex-wrap: wrap;
-}
+    .newsletter-box {
+      background: var(--gris-fond);
+      border-radius: 12px;
+      padding: 30px;
+      border: 1px solid var(--border);
+    }
 
-input[type="email"] {
-  background: #2c2c2e;
-  border: 1px solid #3a3a3c;
-  padding: 18px 25px;
-  border-radius: 12px;
-  color: white;
-  min-width: 320px;
-  outline: none;
-  font-family: 'Montserrat', sans-serif;
-}
+    .newsletter-box h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
 
-.btn-apple {
-  background: var(--blanc-pur);
-  color: black;
-  padding: 18px 40px;
-  border-radius: 980px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
 
-.btn-apple:hover {
-  transform: scale(1.03);
-  background: #f5f5f7;
-}
+    input[type="email"] {
+      background: #1c1c1e;
+      border: 1px solid var(--border);
+      padding: 10px 15px;
+      border-radius: 6px;
+      color: white;
+      outline: none;
+      font-size: 0.85rem;
+    }
 
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  background: #222;
-  gap: 1px;
-  margin-top: 80px;
-  border-top: 1px solid #222;
-  border-bottom: 1px solid #222;
-}
+    .btn-apple {
+      background: var(--blanc-pur);
+      color: black;
+      padding: 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
 
-.service-card {
-  background: var(--noir-apple);
-  padding: 80px 50px;
-  transition: background 0.4s;
-}
+    /* ARCHIVES DE NEWSLETTERS */
+    .archives-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--or-editor);
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-.service-card:hover { background: #080808; }
+    .archive-item {
+      display: block;
+      color: var(--blanc-pur);
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 10px 0;
+      border-bottom: 1px solid #1a1a1a;
+      transition: color 0.3s;
+    }
 
-.service-num {
-  color: var(--or-editor);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
-  margin-bottom: 25px;
-  display: block;
-}
+    .archive-item:hover { color: var(--or-editor); }
 
-.service-card h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
+    .archive-date {
+      color: var(--gris-texte);
+      font-size: 0.6rem;
+      display: block;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+    }
 
-.service-card p {
-  color: var(--gris-texte);
-  font-size: 0.95rem;
-  line-height: 1.7;
-  font-weight: 300;
-}
+    /* SERVICES COMPACTS */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      background: var(--border);
+      gap: 1px;
+      margin-top: 50px;
+    }
 
-footer {
-  padding: 100px 5% 60px;
-  text-align: center;
-  color: var(--gris-texte);
-  font-size: 0.8rem;
-  letter-spacing: 1px;
-}
+    .service-card {
+      background: var(--noir-apple);
+      padding: 30px 20px;
+    }
 
-@media (max-width: 768px) {
-  .hero-title { font-size: 2.8rem; }
-  input[type="email"] { min-width: 100%; }
-  .service-card { padding: 60px 30px; }
-}
-```
+    .service-num {
+      color: var(--or-editor);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      display: block;
+    }
 
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .service-card p {
+      color: var(--gris-texte);
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    footer {
+      padding: 50px 5% 30px;
+      text-align: center;
+      color: #444;
+      font-size: 0.65rem;
+    }
+
+    @media (max-width: 768px) {
+      .dual-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-title { font-size: 1.6rem; }
+    }
   </style>
 </head>
 <body>
 
   <nav>
     <a href="#" class="nav-logo">WORKSANTE</a>
-    <span class="nav-subtitle">Excellence & Prévention</span>
+    <div class="nav-links">
+      <a href="#newsletter">Lettre</a>
+      <a href="#archives">Archives</a>
+      <a href="#services">Services</a>
+      <a href="mailto:contact@worksante.fr">Contact</a>
+    </div>
   </nav>
 
   <section class="hero">
     <p class="hero-eyebrow">Expertise Clinique</p>
-    <h1 class="hero-title">Le corps performant,<br>premier actif de l'entreprise.</h1>
+    <h1 class="hero-title">LE CORPS PERFORMANT,<br>PREMIER ACTIF DE L'ENTREPRISE.</h1>
     <p class="hero-description">L'alliance de l'expertise clinique de pointe et de la stratégie de performance durable pour les décideurs.</p>
   </section>
 
-  <section class="newsletter-section">
-    <div class="newsletter-box">
-      <h2>La Lettre de la Performance</h2>
-      <p style="color: var(--gris-texte);">Analyses exclusives sur la santé des dirigeants et l'optimisation du capital humain.</p>
-      <form class="newsletter-form">
-        <input type="email" placeholder="votre@email.com" required>
-        <button type="submit" class="btn-apple">S'abonner</button>
-      </form>
+  <section class="content-section" id="newsletter">
+    <div class="dual-grid">
+      <div class="newsletter-box">
+        <h2>La Lettre de la Performance</h2>
+        <p style="color: var(--gris-texte); font-size: 0.8rem;">Analyses et stratégies santé pour dirigeants.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="votre@email.com" required>
+          <button type="submit" class="btn-apple">S'abonner</button>
+        </form>
+      </div>
+
+      <div id="archives">
+        <h3 class="archives-title">Dernières Éditions</h3>
+        <div class="archives-list">
+          <a href="#" class="archive-item">
+            <span class="archive-date">Mars 2024</span>
+            Optimisation posturale et prise de décision.
+          </a>
+          <a href="#" class="archive-item">
+            <span class="archive-date">Février 2024</span>
+            Le sommeil : le levier invisible du CEO.
+          </a>
+          <a href="#" class="archive-item">
+            <span class="archive-date">Février 2024</span>
+            Prévention des TMS et retour sur investissement.
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="services-grid">
+  <section class="services-grid" id="services">
     <div class="service-card">
       <span class="service-num">I.</span>
-      <h3>Kinésithérapie Premium</h3>
-      <p>Un suivi d'élite conçu pour les agendas complexes. Rééducation et optimisation fonctionnelle de haut niveau.</p>
+      <h3>Kinésithérapie</h3>
+      <p>Suivi d'élite pour agendas complexes. Rééducation et optimisation.</p>
     </div>
     <div class="service-card">
       <span class="service-num">II.</span>
-      <h3>Prévention Corporate</h3>
-      <p>Audit et mise en place de stratégies posturales pour réduire les TMS et booster l'efficacité au travail.</p>
+      <h3>Prévention</h3>
+      <p>Audit et stratégies posturales pour réduire les TMS en entreprise.</p>
     </div>
     <div class="service-card">
       <span class="service-num">III.</span>
       <h3>Santé Mentale</h3>
-      <p>Développement de la résilience et gestion du stress physiologique en environnement de haute pression.</p>
+      <p>Gestion du stress physiologique et résilience.</p>
     </div>
     <div class="service-card">
       <span class="service-num">IV.</span>
-      <h3>Coaching Dirigeant</h3>
-      <p>Préparation physique sur mesure et protocoles de récupération pour maintenir une énergie constante.</p>
+      <h3>Coaching</h3>
+      <p>Préparation physique et protocoles de récupération.</p>
     </div>
   </section>
 
   <footer>
-    <p>WORKSANTE &copy; 2026 — PARIS</p>
+    <p>WORKSANTE &copy; 2026 — PARIS / INTERNATIONAL</p>
   </footer>
 
 </body>
 </html>
+
+```
