@@ -1,321 +1,104 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WORKSANTE — Performance & Prévention</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --noir-apple: #000000;
-      --gris-fond: #0a0a0a;
-      --blanc-pur: #ffffff;
-      --or-editor: #d4a847;
-      --gris-texte: #a1a1a6;
-      --border: #222;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkSanté</title>
 
-    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-    
-    body {
-      background: var(--noir-apple);
-      color: var(--blanc-pur);
-      font-family: 'Montserrat', sans-serif;
-      line-height: 1.4;
-      -webkit-font-smoothing: antialiased;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+  color: #1d1d1f;
+}
 
-    /* BARRE DE NAVIGATION COMPACTE */
-    nav {
-      position: sticky;
-      top: 0;
-      background: rgba(0,0,0,0.95);
-      backdrop-filter: blur(15px);
-      z-index: 1000;
-      padding: 15px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-    }
+section {
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: auto;
+}
 
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      color: var(--or-editor);
-      text-decoration: none;
-      font-size: 1rem;
-      letter-spacing: 2px;
-    }
+h1, h2 {
+  font-weight: 600;
+}
 
-    .nav-links {
-      display: flex;
-      gap: 15px;
-    }
+.hero {
+  text-align: center;
+  background: #ffffff;
+}
 
-    .nav-links a {
-      color: var(--gris-texte);
-      text-decoration: none;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: color 0.3s;
-    }
+.hero h1 {
+  font-size: 32px;
+}
 
-    .nav-links a:hover { color: var(--blanc-pur); }
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: black;
+  color: white;
+  text-decoration: none;
+}
 
-    /* SECTION HERO CONDENSÉE */
-    .hero {
-      text-align: center;
-      padding: 50px 5% 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+.block {
+  background: white;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
 
-    .hero-eyebrow {
-      color: var(--or-editor);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-size: 0.6rem;
-      margin-bottom: 10px;
-    }
+ul {
+  padding-left: 20px;
+}
 
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      line-height: 1.1;
-      font-weight: 700;
-      text-transform: uppercase;
-      max-width: 850px;
-      margin-bottom: 15px;
-    }
+.footer {
+  text-align: center;
+  font-size: 14px;
+  color: gray;
+}
+</style>
 
-    .hero-description {
-      color: var(--gris-texte);
-      max-width: 500px;
-      font-size: 0.85rem;
-      font-weight: 300;
-    }
-
-    /* SECTION NEWSLETTER ET TITRES */
-    .content-section {
-      padding: 30px 5%;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .dual-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      align-items: start;
-    }
-
-    .newsletter-box {
-      background: var(--gris-fond);
-      border-radius: 12px;
-      padding: 30px;
-      border: 1px solid var(--border);
-    }
-
-    .newsletter-box h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      margin-bottom: 8px;
-    }
-
-    .newsletter-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    input[type="email"] {
-      background: #1c1c1e;
-      border: 1px solid var(--border);
-      padding: 10px 15px;
-      border-radius: 6px;
-      color: white;
-      outline: none;
-      font-size: 0.85rem;
-    }
-
-    .btn-apple {
-      background: var(--blanc-pur);
-      color: black;
-      padding: 10px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      text-align: center;
-      border: none;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
-
-    /* ARCHIVES DE NEWSLETTERS */
-    .archives-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      color: var(--or-editor);
-      margin-bottom: 15px;
-      padding-bottom: 5px;
-      border-bottom: 1px solid var(--border);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .archive-item {
-      display: block;
-      color: var(--blanc-pur);
-      text-decoration: none;
-      font-size: 0.8rem;
-      padding: 10px 0;
-      border-bottom: 1px solid #1a1a1a;
-      transition: color 0.3s;
-    }
-
-    .archive-item:hover { color: var(--or-editor); }
-
-    .archive-date {
-      color: var(--gris-texte);
-      font-size: 0.6rem;
-      display: block;
-      margin-bottom: 2px;
-      text-transform: uppercase;
-    }
-
-    /* SERVICES COMPACTS */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      background: var(--border);
-      gap: 1px;
-      margin-top: 50px;
-    }
-
-    .service-card {
-      background: var(--noir-apple);
-      padding: 30px 20px;
-    }
-
-    .service-num {
-      color: var(--or-editor);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    .service-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-
-    .service-card p {
-      color: var(--gris-texte);
-      font-size: 0.75rem;
-      line-height: 1.4;
-    }
-
-    footer {
-      padding: 50px 5% 30px;
-      text-align: center;
-      color: #444;
-      font-size: 0.65rem;
-    }
-
-    @media (max-width: 768px) {
-      .dual-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .hero-title { font-size: 1.6rem; }
-    }
-  </style>
 </head>
+
 <body>
 
-  <nav>
-    <a href="#" class="nav-logo">WORKSANTE</a>
-    <div class="nav-links">
-      <a href="#newsletter">Lettre</a>
-      <a href="#archives">Archives</a>
-      <a href="#services">Services</a>
-      <a href="mailto:contact@worksante.fr">Contact</a>
-    </div>
-  </nav>
+<section class="hero">
+  <h1>Moins de douleurs. Moins de fatigue. Plus d’énergie au travail.</h1>
+  <p>J’accompagne les entreprises à améliorer durablement la santé et la performance de leurs équipes.</p>
+  <a href="#" class="btn">Échanger</a>
+</section>
 
-  <section class="hero">
-    <p class="hero-eyebrow">Expertise Clinique</p>
-    <h1 class="hero-title">LE CORPS PERFORMANT,<br>PREMIER ACTIF DE L'ENTREPRISE.</h1>
-    <p class="hero-description">L'alliance de l'expertise clinique de pointe et de la stratégie de performance durable pour les décideurs.</p>
-  </section>
+<section class="block">
+  <h2>Le problème</h2>
+  <ul>
+    <li>Fatigue constante</li>
+    <li>Douleurs chroniques</li>
+    <li>Stress permanent</li>
+  </ul>
+</section>
 
-  <section class="content-section" id="newsletter">
-    <div class="dual-grid">
-      <div class="newsletter-box">
-        <h2>La Lettre de la Performance</h2>
-        <p style="color: var(--gris-texte); font-size: 0.8rem;">Analyses et stratégies santé pour dirigeants.</p>
-        <form class="newsletter-form">
-          <input type="email" placeholder="votre@email.com" required>
-          <button type="submit" class="btn-apple">S'abonner</button>
-        </form>
-      </div>
+<section class="block">
+  <h2>Mon approche</h2>
+  <p>Une approche globale basée sur le corps, le système nerveux et l’énergie.</p>
+</section>
 
-      <div id="archives">
-        <h3 class="archives-title">Dernières Éditions</h3>
-        <div class="archives-list">
-          <a href="#" class="archive-item">
-            <span class="archive-date">Mars 2024</span>
-            Optimisation posturale et prise de décision.
-          </a>
-          <a href="#" class="archive-item">
-            <span class="archive-date">Février 2024</span>
-            Le sommeil : le levier invisible du CEO.
-          </a>
-          <a href="#" class="archive-item">
-            <span class="archive-date">Février 2024</span>
-            Prévention des TMS et retour sur investissement.
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="block">
+  <h2>Interventions</h2>
+  <ul>
+    <li>Ateliers entreprise</li>
+    <li>Suivi des équipes</li>
+    <li>Accompagnement dirigeants</li>
+  </ul>
+</section>
 
-  <section class="services-grid" id="services">
-    <div class="service-card">
-      <span class="service-num">I.</span>
-      <h3>Kinésithérapie</h3>
-      <p>Suivi d'élite pour agendas complexes. Rééducation et optimisation.</p>
-    </div>
-    <div class="service-card">
-      <span class="service-num">II.</span>
-      <h3>Prévention</h3>
-      <p>Audit et stratégies posturales pour réduire les TMS en entreprise.</p>
-    </div>
-    <div class="service-card">
-      <span class="service-num">III.</span>
-      <h3>Santé Mentale</h3>
-      <p>Gestion du stress physiologique et résilience.</p>
-    </div>
-    <div class="service-card">
-      <span class="service-num">IV.</span>
-      <h3>Coaching</h3>
-      <p>Préparation physique et protocoles de récupération.</p>
-    </div>
-  </section>
+<section class="block">
+  <h2>Contact</h2>
+  <p>Contact : tonemail@email.com</p>
+</section>
 
-  <footer>
-    <p>WORKSANTE &copy; 2026 — PARIS / INTERNATIONAL</p>
-  </footer>
+<section class="footer">
+  <p>WorkSanté 2026</p>
+</section>
 
 </body>
 </html>
-
-```
