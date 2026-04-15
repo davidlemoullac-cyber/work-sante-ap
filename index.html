@@ -7,98 +7,146 @@
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: white;
-  color: black;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Arial;
+  color:#111;
+  background:#f5f5f7;
 }
 
-section {
-  padding: 60px 20px;
-  max-width: 1000px;
-  margin: auto;
+.container {
+  max-width:1100px;
+  margin:auto;
+  padding:60px 20px;
 }
 
 h1 {
-  font-size: 40px;
-  line-height: 1.2;
+  font-size:48px;
+  line-height:1.1;
 }
 
 h2 {
-  font-size: 26px;
+  font-size:32px;
+  margin-bottom:20px;
+}
+
+p {
+  color:#555;
+}
+
+.hero {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
 }
 
 .hero img {
-  width: 100%;
-  margin-top: 20px;
-  border-radius: 10px;
+  width:100%;
+  border-radius:16px;
 }
 
 .btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 24px;
-  background: black;
-  color: white;
-  text-decoration: none;
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 28px;
+  background:#111;
+  color:white;
+  text-decoration:none;
 }
 
 .block {
-  border-top: 1px solid #ddd;
-  padding-top: 30px;
+  border-top:1px solid #ddd;
 }
 
 .constat {
-  max-width: 500px;
-  font-weight: bold;
-  font-size: 20px;
+  font-weight:bold;
+  font-size:22px;
+  max-width:500px;
+  line-height:1.4;
+}
+
+.cards {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.card {
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  border:1px solid #eee;
 }
 
 .intervention img {
-  width: 100%;
-  margin-top: 20px;
-  border-radius: 10px;
+  width:100%;
+  border-radius:16px;
+  margin-top:30px;
+}
+
+.contact {
+  background:white;
+  padding:30px;
+  border-radius:16px;
 }
 </style>
-
 </head>
 
 <body>
 
-<section class="hero">
-  <h1>Moins de douleurs. Moins de fatigue. Plus d’énergie au travail.</h1>
-  <p>J’accompagne les entreprises à améliorer durablement la santé et la performance de leurs équipes.</p>
-  
-  <a href="mailto:lemoullac.marjorie@gmail.com" class="btn">Me contacter</a>
+<div class="container hero">
+  <div>
+    <h1>Moins de douleurs. Moins de fatigue. Plus d’énergie au travail.</h1>
+    <p>J’accompagne les entreprises à améliorer durablement la santé et la performance de leurs équipes.</p>
+    <a href="mailto:lemoullac.marjorie@gmail.com" class="btn">Me contacter</a>
+  </div>
 
-  <img src="photo1.jpg">
-</section>
+  <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80">
+</div>
 
-<section class="block">
+<div class="container block">
   <h2>Constat</h2>
   <p class="constat">
     Beaucoup de salariés ne sont pas malades.  
     Mais ils ne sont plus vraiment en pleine capacité.  
     Ils tiennent. Puis ils s’usent.
   </p>
-</section>
+</div>
 
-<section class="block">
-  <h2>Mon approche</h2>
-  <p>Une approche globale basée sur le corps, le système nerveux et l’énergie.</p>
-</section>
+<div class="container block">
+  <h2>Une approche globale</h2>
 
-<section class="block intervention">
+  <div class="cards">
+    <div class="card">
+      <h3>Le corps</h3>
+      <p>Douleurs, mobilité, récupération.</p>
+    </div>
+
+    <div class="card">
+      <h3>Système nerveux</h3>
+      <p>Stress, fatigue mentale, sommeil.</p>
+    </div>
+
+    <div class="card">
+      <h3>Énergie</h3>
+      <p>Habitudes, récupération, équilibre.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container block intervention">
   <h2>Interventions en entreprise</h2>
   <p>Ateliers, accompagnement, prévention directement sur le terrain.</p>
-  
-  <img src="photo2.jpg">
-</section>
 
-<section class="block">
+  <img src="https://images.unsplash.com/photo-1584467735871-8b95e1f6aebc?auto=format&fit=crop&w=1200&q=80">
+</div>
+
+<div class="container block">
   <h2>Contact</h2>
-  <p>Email : <a href="mailto:lemoullac.marjorie@gmail.com">lemoullac.marjorie@gmail.com</a></p>
-</section>
+  <div class="contact">
+    <p>Email : <a href="mailto:lemoullac.marjorie@gmail.com">lemoullac.marjorie@gmail.com</a></p>
+  </div>
+</div>
 
 </body>
 </html>
