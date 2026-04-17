@@ -4,86 +4,759 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WorkSanté — Santé, performance et prévention en entreprise</title>
+  <meta
+    name="description"
+    content="WorkSanté accompagne les entreprises pour réduire la fatigue, prévenir les douleurs et améliorer durablement l'énergie des équipes."
+  />
   <style>
     :root {
       --bg: #f4f5f7;
+      --bg-soft: #ffffff;
+      --card: rgba(255, 255, 255, 0.86);
       --text: #111111;
       --muted: #5f6368;
       --line: rgba(17, 17, 17, 0.08);
       --accent: #111111;
+      --accent-soft: #8b9098;
+      --warm: #e9edf2;
       --shadow: 0 18px 60px rgba(15, 23, 42, 0.06);
       --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
       --max: 1180px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
       color: var(--text);
-      background: #f8fafc;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.96), transparent 34%),
+        linear-gradient(180deg, #fafbfc 0%, #f2f4f7 100%);
       line-height: 1.55;
     }
 
-    .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-    /* BARRE DE NAVIGATION */
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
     .topbar {
-      position: sticky; top: 0; z-index: 100;
+      position: sticky;
+      top: 0;
+      z-index: 100;
       backdrop-filter: blur(14px);
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.82);
       border-bottom: 1px solid var(--line);
     }
-    .topbar-inner { display: flex; align-items: center; justify-content: space-between; min-height: 74px; }
-    .brand { font-weight: 700; font-size: 1.2rem; }
-    .nav { display: flex; gap: 20px; }
-    .nav a { font-size: 0.95rem; color: var(--muted); text-decoration: none; }
 
-    .btn { 
-      display: inline-flex; align-items: center; justify-content: center; 
-      padding: 0 24px; min-height: 48px; border-radius: 999px; 
-      font-weight: 600; cursor: pointer; border: none; text-decoration: none;
-      transition: 0.2s;
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 74px;
     }
-    .btn-primary { background: var(--accent); color: #fff; }
 
-    /* SECTION HERO (HAUT) - TA PHOTO ICI */
-    .hero { padding: 60px 0; }
-    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 30px; }
-    .hero-copy { background: #fff; padding: 45px; border-radius: var(--radius-xl); border: 1px solid var(--line); box-shadow: var(--shadow); }
-    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background:
+        linear-gradient(145deg, #dfe3e8, #ffffff);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.7);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      font-size: 0.96rem;
+      color: var(--muted);
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      transition: 0.22s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 14px 32px rgba(17, 17, 17, 0.12);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .btn-secondary {
+      border-color: var(--line);
+      background: rgba(255,255,255,0.72);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.94);
+    }
+
+    .hero {
+      padding: 56px 0 40px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 30px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
     .hero-visual {
       border-radius: var(--radius-xl);
-      border: 1px solid var(--line);
       box-shadow: var(--shadow);
-      /* ON UTILISE TON IMAGE ICI */
-      background: url("image.png") center/cover no-repeat;
-      min-height: 450px;
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      overflow: hidden;
     }
 
-    h1 { font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.04em; }
+    .hero-copy {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.72)),
+        linear-gradient(135deg, #ffffff 0%, #f3f6f9 100%);
+      padding: 42px;
+    }
 
-    /* SECTION MÉTHODE ET À PROPOS - TA PHOTO ICI AUSSI */
-    section { padding: 50px 0; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 30px; box-shadow: var(--shadow); }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+    }
 
-    .about-wrap { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 25px; margin-top: 40px; }
-    .portrait {
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2.2rem, 4vw, 4.6rem);
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+      max-width: 12ch;
+    }
+
+    .hero-copy p.lead {
+      margin: 0;
+      max-width: 62ch;
+      color: #454a52;
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .hero-point {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+    }
+
+    .hero-point strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .hero-point span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 100%;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(17,17,17,0.16)),
+        url("https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
+    }
+
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(17,17,17,0.02), rgba(17,17,17,0.18));
+    }
+
+    .hero-card {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 22px;
+      z-index: 1;
+      padding: 18px 18px 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+    }
+
+    .hero-card small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-card strong {
+      font-size: 1.08rem;
+    }
+
+    section {
+      padding: 38px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2.5vw, 2.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 58ch;
+      color: var(--muted);
+    }
+
+    .grid-3,
+    .grid-2,
+    .cards-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cards-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .mini-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-soft);
+    }
+
+    .problem-band {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .problem-quote {
+      background: linear-gradient(180deg, #ffffff 0%, #f3f6f9 100%);
+      color: #1f2328;
+      padding: 20px 22px;
+    }
+
+    .problem-quote blockquote {
+      margin: 0;
+      font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      max-width: 18ch;
+    }
+
+    .problem-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .problem-item {
+      display: flex;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(17, 17, 17, 0.07);
+    }
+
+    .problem-bullet {
+      flex: 0 0 10px;
+      height: 10px;
+      margin-top: 8px;
+      border-radius: 50%;
+      background: #8b9098;
+    }
+
+    .approach-card {
+      min-height: 100%;
+    }
+
+    .approach-number {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      background: #eef1f5;
+      color: #4b5159;
+      font-weight: 700;
+    }
+
+    .method-panel {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .method-visual {
+      min-height: 420px;
       border-radius: var(--radius-xl);
-      border: 1px solid var(--line);
-      /* ON UTILISE TON IMAGE ICI */
-      background: url("image.png") center/cover no-repeat;
-      min-height: 450px;
+      overflow: hidden;
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(17,17,17,0.14)),
+        url("https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
     }
 
-    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; margin-top: 40px; }
-    input, textarea { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--line); margin-bottom: 15px; font-family: inherit; }
+    .method-copy {
+      display: grid;
+      gap: 18px;
+    }
 
-    @media (max-width: 900px) {
-      .hero-grid, .grid-3, .about-wrap, .contact-grid { grid-template-columns: 1fr; }
-      .nav { display: none; }
+    .metric {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(17, 17, 17, 0.07);
+    }
+
+    .metric strong {
+      font-size: 1.8rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .services .card {
+      padding-bottom: 26px;
+    }
+
+    .services ul,
+    .offer-list,
+    .resource-list,
+    .contact-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .services li,
+    .offer-list li,
+    .resource-list li,
+    .contact-list li {
+      position: relative;
+      padding-left: 18px;
+      margin: 10px 0 0;
+      color: var(--muted);
+    }
+
+    .services li::before,
+    .offer-list li::before,
+    .resource-list li::before,
+    .contact-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #8b9098;
+    }
+
+    .offers-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .offer {
+      position: relative;
+      padding-top: 28px;
+    }
+
+    .offer.featured {
+      background: linear-gradient(180deg, #111111 0%, #2b3138 100%);
+      color: #fff;
+      transform: translateY(-6px);
+    }
+
+    .offer.featured p,
+    .offer.featured li,
+    .offer.featured .price-note {
+      color: rgba(255,255,255,0.78);
+    }
+
+    .badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .price {
+      margin: 10px 0 6px;
+      font-size: 2rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .price-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .portrait {
+      min-height: 420px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(17,17,17,0.16)),
+        url("https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
+      position: relative;
+    }
+
+    .portrait-note {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      color: #4f5560;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .resource-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .resource-cover {
+      aspect-ratio: 16 / 10;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .resource-body {
+      padding: 20px;
+    }
+
+    .resource-body h3 {
+      margin-bottom: 8px;
+    }
+
+    .cta {
+      padding: 22px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #eef1f5 0%, #ffffff 100%);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .cta h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.5rem, 2.5vw, 2.4rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    .cta p {
+      margin: 0;
+      color: #4f5560;
+      max-width: 58ch;
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .form-card form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 0.93rem;
+      font-weight: 600;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(17, 17, 17, 0.12);
+      background: rgba(255,255,255,0.84);
+      border-radius: 14px;
+      min-height: 52px;
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--text);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 138px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(17, 17, 17, 0.24);
+      box-shadow: 0 0 0 4px rgba(139, 144, 152, 0.14);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    footer {
+      padding: 26px 0 44px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
+
+    @media (max-width: 1050px) {
+      .hero-grid,
+      .problem-band,
+      .method-panel,
+      .about-wrap,
+      .contact-wrap,
+      .offers-wrap,
+      .resources-grid,
+      .cards-grid,
+      .grid-3,
+      .grid-2,
+      .cta {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-points {
+        grid-template-columns: 1fr;
+      }
+
+      .method-visual,
+      .portrait {
+        min-height: 320px;
+      }
+
+      .cta {
+        align-items: start;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        min-height: 68px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 26px;
+      }
+
+      .hero-copy {
+        padding: 24px;
+      }
+
+      .container {
+        width: min(var(--max), calc(100% - 20px));
+      }
+
+      section {
+        padding: 28px 0;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      h1 {
+        max-width: none;
+      }
+
+      .problem-quote blockquote {
+        max-width: none;
+      }
     }
   </style>
 </head>
@@ -91,75 +764,458 @@
 
   <header class="topbar">
     <div class="container topbar-inner">
-      <div class="brand">WorkSanté</div>
+      <a href="#top" class="brand">
+        <span class="brand-mark"></span>
+        <span>WorkSanté</span>
+      </a>
+
       <nav class="nav">
         <a href="#approche">Approche</a>
         <a href="#interventions">Interventions</a>
+        <a href="#offres">Offres</a>
+        <a href="#ressources">Ressources</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a href="#contact" class="btn btn-primary">Prendre contact</a>
+
+      <a class="btn btn-secondary" href="#contact">Prendre contact</a>
     </div>
   </header>
 
-  <main>
-    <div class="container">
-      
-      <section class="hero">
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <h1>Moins de douleurs. Plus d’énergie au travail.</h1>
-            <p style="font-size: 1.1rem; color: var(--muted); margin-bottom: 30px;">
-              J'accompagne les entreprises pour améliorer la santé et la performance des équipes grâce à une approche globale du corps et de la récupération.
-            </p>
-            <a href="#contact" class="btn btn-primary">Démarrer un projet</a>
-          </div>
-          <div class="hero-visual"></div>
-        </div>
-      </section>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Santé durable • Prévention • Performance au travail</div>
+          <h1>Moins de douleurs. Moins de fatigue. Plus d’énergie au travail.</h1>
+          <p class="lead">
+            J’accompagne les entreprises qui veulent améliorer durablement la santé, la clarté mentale
+            et la performance de leurs équipes grâce à une approche fondée sur le corps, le système
+            nerveux et les habitudes de récupération.
+          </p>
 
-      <section id="approche">
-        <h2>Une vision globale</h2>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Échanger sur votre entreprise</a>
+            <a class="btn btn-secondary" href="#approche">Découvrir l’approche</a>
+          </div>
+
+          <div class="hero-points">
+            <div class="hero-point">
+              <strong>Prévenir</strong>
+              <span>Douleurs, fatigue chronique, surcharge physique et mentale.</span>
+            </div>
+            <div class="hero-point">
+              <strong>Comprendre</strong>
+              <span>Le corps comme un système, pas comme une somme de symptômes.</span>
+            </div>
+            <div class="hero-point">
+              <strong>Transformer</strong>
+              <span>Des actions concrètes, simples à appliquer et durables dans le temps.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card">
+            <small>WorkSanté</small>
+            <strong>Une approche premium, humaine et crédible pour la santé en entreprise.</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container problem-band">
+        <div class="card problem-quote">
+          <span class="mini-label">Constat</span>
+          <blockquote>
+            Beaucoup de salariés ne sont pas “malades”. Mais ils ne sont plus vraiment
+            en pleine capacité. Ils tiennent. Puis ils s’usent.
+          </blockquote>
+        </div>
+
+        <div class="card">
+          <span class="mini-label">Ce que l’on observe</span>
+          <div class="problem-list">
+            <div class="problem-item">
+              <span class="problem-bullet"></span>
+              <div>
+                <strong>Douleurs qui s’installent</strong><br />
+                Tensions, inconfort, récupération insuffisante, gestes répétés.
+              </div>
+            </div>
+            <div class="problem-item">
+              <span class="problem-bullet"></span>
+              <div>
+                <strong>Fatigue persistante</strong><br />
+                Manque d’énergie, sommeil de mauvaise qualité, concentration diminuée.
+              </div>
+            </div>
+            <div class="problem-item">
+              <span class="problem-bullet"></span>
+              <div>
+                <strong>Stress permanent</strong><br />
+                Charge mentale, irritabilité, difficultés à récupérer réellement.
+              </div>
+            </div>
+            <div class="problem-item">
+              <span class="problem-bullet"></span>
+              <div>
+                <strong>Performance altérée</strong><br />
+                Présentéisme, baisse de clarté, moins de constance, plus d’usure.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="approche">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Une approche globale, pas une solution superficielle.</h2>
+          </div>
+          <p>
+            La plupart des approches traitent séparément la posture, le stress ou l’alimentation.
+            Le corps, lui, ne fonctionne jamais en silos.
+          </p>
+        </div>
+
         <div class="grid-3">
-          <div class="card"><h3>Posture</h3><p>Réduire les tensions liées au poste de travail.</p></div>
-          <div class="card"><h3>Récupération</h3><p>Gérer la fatigue et le stress durablement.</p></div>
-          <div class="card"><h3>Mobilité</h3><p>Entretenir le capital physique des collaborateurs.</p></div>
-        </div>
-      </section>
+          <article class="card approach-card">
+            <div class="approach-number">1</div>
+            <h3>Le corps</h3>
+            <p>
+              Douleurs, mobilité, récupération, contraintes physiques, capacité à supporter la charge
+              de travail sans s’épuiser.
+            </p>
+          </article>
 
-      <section id="a-propos">
-        <div class="about-wrap">
-          <div class="portrait"></div>
+          <article class="card approach-card">
+            <div class="approach-number">2</div>
+            <h3>Le système nerveux</h3>
+            <p>
+              Stress, vigilance, qualité du sommeil, fatigue mentale, sensation d’être toujours “en
+              tension”.
+            </p>
+          </article>
+
+          <article class="card approach-card">
+            <div class="approach-number">3</div>
+            <h3>L’énergie au quotidien</h3>
+            <p>
+              Rythmes de vie, récupération, habitudes, hygiène de vie, leviers simples pour tenir sans
+              s’abîmer.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container method-panel">
+        <div class="method-visual"></div>
+
+        <div class="method-copy">
           <div class="card">
-            <h2>À propos de Marjorie</h2>
-            <p>Kinésithérapeute de formation, j'aide les entreprises à placer la santé au cœur de leur stratégie de performance.</p>
-            <p>Mon approche est concrète, basée sur la physiologie et adaptée aux contraintes réelles du terrain.</p>
+            <span class="mini-label">Ce que cela change</span>
+            <h2 style="margin:0 0 12px; font-size: clamp(1.7rem, 2.4vw, 2.5rem); line-height:1.08; letter-spacing:-0.03em;">
+              Comprendre le corps permet de changer durablement son fonctionnement.
+            </h2>
+            <p>
+              L’objectif n’est pas seulement de soulager ponctuellement. L’objectif est d’améliorer la
+              capacité des équipes à récupérer, à mieux tolérer la charge et à retrouver une énergie
+              plus stable.
+            </p>
+          </div>
+
+          <div class="metric">
+            <strong>+ clair</strong>
+            <span>Mieux dormir, mieux récupérer, mieux fonctionner au quotidien.</span>
+          </div>
+
+          <div class="metric">
+            <strong>+ stable</strong>
+            <span>Réduire les variations d’énergie, les pics de fatigue et l’usure progressive.</span>
+          </div>
+
+          <div class="metric">
+            <strong>+ durable</strong>
+            <span>Installer des habitudes réalistes, applicables en entreprise et tenables dans le temps.</span>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="contact">
-        <div class="contact-grid">
-          <div class="card">
-            <h2>Parlons de vos besoins</h2>
-            <p>Email : lemoullac.marjorie@gmail.com</p>
-            <p>📍 Orléans & Distanciel</p>
+    <section id="interventions" class="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Des interventions concrètes en entreprise.</h2>
           </div>
-          <div class="card">
-            <form>
-              <input type="text" placeholder="Nom">
-              <input type="email" placeholder="Email">
-              <textarea placeholder="Votre message"></textarea>
-              <button type="button" class="btn btn-primary" style="width:100%">Envoyer</button>
-            </form>
+          <p>
+            Présentiel ou distanciel, ponctuel ou régulier, avec un format adapté à la réalité du
+            terrain et à vos équipes.
+          </p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="card">
+            <span class="mini-label">Ateliers</span>
+            <h3>Prévention & sensibilisation</h3>
+            <p>Des formats accessibles pour comprendre, prévenir et agir.</p>
+            <ul>
+              <li>TMS, fatigue, récupération</li>
+              <li>Stress et système nerveux</li>
+              <li>Sommeil, énergie, concentration</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="mini-label">Suivi</span>
+            <h3>Accompagnement des équipes</h3>
+            <p>Installer des changements progressifs, utiles et mesurables.</p>
+            <ul>
+              <li>Programmes sur plusieurs semaines</li>
+              <li>Actions simples à intégrer au quotidien</li>
+              <li>Adaptation aux contraintes réelles du travail</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="mini-label">Ciblé</span>
+            <h3>Interventions premium</h3>
+            <p>Pour dirigeants, profils à forte charge mentale ou équipes sous pression.</p>
+            <ul>
+              <li>Accompagnement individualisé</li>
+              <li>Récupération, clarté, endurance mentale</li>
+              <li>Approche confidentielle et haut de gamme</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="offres">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Des offres lisibles, sans complexité inutile.</h2>
+          </div>
+          <p>
+            Une base claire pour échanger. Les formats exacts sont ensuite ajustés à votre entreprise.
+          </p>
+        </div>
+
+        <div class="offers-wrap">
+          <article class="card offer">
+            <span class="mini-label">Essentiel</span>
+            <h3>Prévention</h3>
+            <div class="price">À partir de 1 atelier</div>
+            <div class="price-note">Pour sensibiliser, prévenir et initier une dynamique.</div>
+            <ul class="offer-list">
+              <li>Atelier ou intervention ponctuelle</li>
+              <li>Thèmes ciblés</li>
+              <li>Format simple à mettre en place</li>
+            </ul>
+          </article>
+
+          <article class="card offer featured">
+            <div class="badge">Le plus demandé</div>
+            <span class="mini-label">Durable</span>
+            <h3>Accompagnement</h3>
+            <div class="price">Programme sur mesure</div>
+            <div class="price-note">Pour installer de vraies habitudes et obtenir un impact dans le temps.</div>
+            <ul class="offer-list">
+              <li>Suivi de plusieurs semaines ou mois</li>
+              <li>Actions concrètes et progressives</li>
+              <li>Adapté aux équipes et aux contraintes du terrain</li>
+            </ul>
+          </article>
+
+          <article class="card offer">
+            <span class="mini-label">Premium</span>
+            <h3>Performance</h3>
+            <div class="price">Accompagnement ciblé</div>
+            <div class="price-note">Pour les profils qui ont besoin d’un niveau d’accompagnement supérieur.</div>
+            <ul class="offer-list">
+              <li>Dirigeants et postes à forte responsabilité</li>
+              <li>Récupération, énergie, charge mentale</li>
+              <li>Format discret et haut de gamme</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="a-propos">
+      <div class="container about-wrap">
+        <div class="portrait">
+          <div class="portrait-note">
+            <strong>À personnaliser :</strong> remplace cette image par ta photo ou une image plus cohérente
+            avec ton univers.
           </div>
         </div>
-      </section>
 
-    </div>
+        <div class="card">
+          <span class="mini-label">À propos</span>
+          <h2 style="margin:0 0 14px; font-size: clamp(1.8rem, 2.7vw, 2.8rem); line-height:1.08; letter-spacing:-0.03em;">
+            Une expertise du corps pensée pour le monde du travail.
+          </h2>
+          <p style="margin-bottom:14px;">
+            Je suis kinésithérapeute spécialisée dans le mouvement et le bien-être. Mon approche repose
+            sur une idée simple : quand on comprend mieux le corps, on prend de meilleures décisions pour
+            sa santé, sa récupération et sa performance.
+          </p>
+          <p style="margin-bottom:14px;">
+            Je ne propose pas une accumulation de conseils abstraits. Je construis des interventions
+            concrètes, incarnées, réalistes et applicables dans la vraie vie des entreprises.
+          </p>
+          <p>
+            L’objectif : moins d’usure, plus de stabilité, et une meilleure capacité à durer.
+          </p>
+
+          <ul class="contact-list" style="margin-top:18px;">
+            <li>Approche humaine, premium et crédible</li>
+            <li>Vision globale : corps, fatigue, récupération, énergie</li>
+            <li>Interventions pensées pour être réellement utilisées</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="ressources">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Ressources & thématiques.</h2>
+          </div>
+          <p>
+            Quelques exemples de sujets traités dans l’univers WorkSanté. Cette section peut ensuite
+            devenir une vraie bibliothèque d’articles ou de newsletters.
+          </p>
+        </div>
+
+        <div class="resources-grid">
+          <article class="card resource-card">
+            <div class="resource-cover" style="background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="resource-body">
+              <span class="mini-label">Métabolisme</span>
+              <h3>Sucre, énergie, fatigue</h3>
+              <p>Comprendre ce qui dérègle progressivement l’énergie et la récupération.</p>
+              <ul class="resource-list">
+                <li>Glycémie et fonctionnement du corps</li>
+                <li>Énergie stable vs fatigue en cascade</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card resource-card">
+            <div class="resource-cover" style="background-image:url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="resource-body">
+              <span class="mini-label">Récupération</span>
+              <h3>Sommeil, système nerveux, clarté mentale</h3>
+              <p>Le sommeil et la récupération comme leviers de performance durable.</p>
+              <ul class="resource-list">
+                <li>Fatigue mentale et qualité du sommeil</li>
+                <li>Concentration, vigilance, résilience</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card resource-card">
+            <div class="resource-cover" style="background-image:url('https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="resource-body">
+              <span class="mini-label">Mouvement</span>
+              <h3>Cartilage, douleurs, reprise progressive</h3>
+              <p>Pourquoi le mouvement reste central pour prévenir l’usure et entretenir la fonction.</p>
+              <ul class="resource-list">
+                <li>Mobilité et entretien articulaire</li>
+                <li>Capacité du corps à s’adapter</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h2>Vous voulez une version adaptée à votre entreprise ?</h2>
+            <p>
+              Nous pouvons construire un format simple, lisible et cohérent avec vos besoins :
+              prévention, accompagnement, intervention ciblée ou programme plus global.
+            </p>
+          </div>
+          <a class="btn btn-primary" href="#contact">Prendre contact</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-wrap">
+        <div class="card">
+          <span class="mini-label">Contact</span>
+          <h2 style="margin:0 0 12px; font-size: clamp(1.8rem, 2.7vw, 2.8rem); line-height:1.08; letter-spacing:-0.03em;">
+            Parlons de votre structure.
+          </h2>
+          <p>
+            Vous pouvez me contacter directement par email.
+          </p>
+
+          <ul class="contact-list">
+            <li><strong>Email :</strong> <a href="mailto:lemoullac.marjorie@gmail.com">lemoullac.marjorie@gmail.com</a></li>
+            <li><strong>Zone d’intervention :</strong> Orléans et alentours / distanciel possible</li>
+          </ul>
+
+          <p class="note" style="margin-top:18px;">
+            Vous pouvez aussi remplacer ce bloc plus tard par un lien Doctolib, Calendly, Planity ou un simple bouton mail.
+          </p>
+        </div>
+
+        <div class="card form-card">
+          <span class="mini-label">Formulaire visuel</span>
+          <form>
+            <div class="field">
+              <label for="name">Nom</label>
+              <input id="name" type="text" placeholder="Votre nom" />
+            </div>
+
+            <div class="field">
+              <label for="company">Entreprise</label>
+              <input id="company" type="text" placeholder="Nom de votre entreprise" />
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="vous@email.com" />
+            </div>
+
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Décrivez brièvement votre besoin"></textarea>
+            </div>
+
+            <button class="btn btn-primary" type="button">Envoyer</button>
+            <p class="note">
+              Ce bouton est visuel pour l’instant. Il faudra ajouter un vrai système d’envoi si vous voulez
+              recevoir les messages depuis le site.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer style="text-align: center; padding: 50px 0; color: var(--muted); border-top: 1px solid var(--line);">
-    © 2026 WorkSanté
+  <footer>
+    <div class="container footer-inner">
+      <div>© WorkSanté 2026</div>
+      <div>
+        À personnaliser : mentions légales • politique de confidentialité • SIRET
+      </div>
+    </div>
   </footer>
 
 </body>
